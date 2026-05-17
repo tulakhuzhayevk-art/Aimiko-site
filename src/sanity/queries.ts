@@ -38,6 +38,7 @@ export async function getProducts(): Promise<Product[]> {
       name: p.name || "",
       category: p.category || "",
       categoryId: p.categoryId || "",
+      subcategoryId: p.subcategoryId || "",
       description: p.description || "",
       price: p.price || "0 ₽",
       oldPrice: p.oldPrice || undefined,
@@ -67,6 +68,7 @@ export async function getProduct(id: string): Promise<Product | null> {
       name,
       category,
       categoryId,
+      subcategoryId,
       description,
       price,
       oldPrice,
@@ -85,12 +87,12 @@ export async function getProduct(id: string): Promise<Product | null> {
       // Ищем в локальных
       return localProducts.find((lp) => lp.id === id) || null;
     }
-
     return {
       id: p.id || "",
       name: p.name || "",
       category: p.category || "",
       categoryId: p.categoryId || "",
+      subcategoryId: p.subcategoryId || "",
       description: p.description || "",
       price: p.price || "0 ₽",
       oldPrice: p.oldPrice || undefined,
