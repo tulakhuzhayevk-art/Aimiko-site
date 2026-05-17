@@ -895,14 +895,17 @@ function ProductCard({ product }: { product: Product }) {
             )}
           </motion.div>
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {categories.map((category) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                isActive={activeCategoryId === category.id}
-                onClick={() => handleSelectCategory(category.id)}
-              />
-            ))}
+          {categories.map((category) => {
+              const count = products.filter((p) => p.categoryId === category.id).length;
+              return (
+                <CategoryCard
+                  key={category.id}
+                  category={{ ...category, count }}
+                  isActive={activeCategoryId === category.id}
+                  onClick={() => handleSelectCategory(category.id)}
+                />
+              );
+            })}
           </div>
         </div>
       </motion.section>
