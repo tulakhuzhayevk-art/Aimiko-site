@@ -133,5 +133,107 @@ const product = {
       },
     ],
   };
-  
-  export const schemaTypes = [product];
+  const service = {
+    name: "service",
+    title: "Услуга",
+    type: "document",
+    fields: [
+      {
+        name: "name",
+        title: "Название услуги",
+        type: "string",
+        validation: (Rule: any) => Rule.required(),
+      },
+      {
+        name: "slug",
+        title: "URL (slug)",
+        type: "slug",
+        options: { source: "name", maxLength: 96 },
+        validation: (Rule: any) => Rule.required(),
+      },
+      {
+        name: "shortDescription",
+        title: "Краткое описание (для карточки)",
+        type: "text",
+        rows: 2,
+        description: "1-2 предложения. Видно сразу в списке услуг.",
+        validation: (Rule: any) => Rule.required(),
+      },
+      {
+        name: "description",
+        title: "Полное описание",
+        type: "text",
+        rows: 5,
+        description: "Подробно: что делаешь, что клиент получит.",
+        validation: (Rule: any) => Rule.required(),
+      },
+      {
+        name: "price",
+        title: "Стоимость",
+        type: "string",
+        description: 'Например: "От 1 000 ₽", "Индивидуально", "5 000 ₽"',
+        validation: (Rule: any) => Rule.required(),
+      },
+      {
+        name: "duration",
+        title: "Срок выполнения",
+        type: "string",
+        description: 'Например: "1–3 дня", "В день обращения"',
+      },
+      {
+        name: "warranty",
+        title: "Гарантия",
+        type: "string",
+        description: 'Например: "6 месяцев", "30 дней", "Без гарантии"',
+      },
+      {
+        name: "location",
+        title: "Где выполняется",
+        type: "string",
+        initialValue: "Москва, ул. Вернисажная, 13 (м. Локомотив)",
+      },
+      {
+        name: "includes",
+        title: "Что входит в услугу",
+        type: "array",
+        of: [{ type: "string" }],
+        description: "Список пунктов: что именно делаешь.",
+      },
+      {
+        name: "details",
+        title: "Подробности (цены/условия)",
+        type: "array",
+        of: [
+          {
+            type: "object",
+            fields: [
+              { name: "label", title: "Параметр", type: "string" },
+              { name: "value", title: "Значение", type: "string" },
+            ],
+          },
+        ],
+        description: 'Пары "Параметр — Значение"',
+      },
+      {
+        name: "images",
+        title: "Фотографии",
+        type: "array",
+        of: [{ type: "image", options: { hotspot: true } }],
+      },
+      {
+        name: "isPopular",
+        title: "Показывать на главной",
+        type: "boolean",
+        initialValue: false,
+      },
+    ],
+    preview: {
+      select: {
+        title: "name",
+        subtitle: "price",
+        media: "images.0",
+      },
+    },
+  };
+
+  export const schemaTypes = [product, service];

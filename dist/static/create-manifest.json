@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-05-17T11:57:51.207Z",
+  "createdAt": "2026-05-17T13:18:59.551Z",
   "studioVersion": "5.25.0",
   "version": 3,
   "workspaces": [
@@ -13,7 +13,7 @@
       },
       "name": "aimiko-studio",
       "projectId": "03olwsys",
-      "schema": "ca00036d.create-schema.json",
+      "schema": "061e539c.create-schema.json",
       "title": "Aimiko Admin",
       "tools": "a1fd46b5.create-tools.json"
     }

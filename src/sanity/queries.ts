@@ -112,3 +112,78 @@ export async function getProduct(id: string): Promise<Product | null> {
     return localProducts.find((lp) => lp.id === id) || null;
   }
 }
+// ──────────────────────────────────────────────
+//   Услуги
+// ──────────────────────────────────────────────
+
+export type Service = {
+  id: string;
+  name: string;
+  shortDescription: string;
+  description: string;
+  price: string;
+  duration?: string;
+  warranty?: string;
+  location?: string;
+  includes: string[];
+  details: { label: string; value: string }[];
+  images: string[];
+  isPopular: boolean;
+};
+
+const SERVICE_PROJECTION = `{
+  "id": slug.current,
+  name,
+  shortDescription,
+  description,
+  price,
+  duration,
+  warranty,
+  location,
+  includes,
+  details,
+  "images": images[].asset->url,
+  isPopular
+}`;
+
+function normalizeService(s: any): Service {
+  return {
+    id: s.id || "",
+    name: s.name || "",
+    shortDescription: s.shortDescription || "",
+    description: s.description || "",
+    price: s.price || "",
+    duration: s.duration || undefined,
+    warranty: s.warranty || undefined,
+    location: s.location || undefined,
+    includes: s.includes || [],
+    details: (s.details || []).map((d: any) => ({
+      label: d.label || "",
+      value: d.value || "",
+    })),
+    images: (s.images || []).filter(Boolean),
+    isPopular: s.isPopular || false,
+  };
+}
+
+export async function getServices(): Promise<Service[]> {
+  try {
+    const query = `*[_type == "service"] | order(_createdAt desc) ${SERVICE_PROJECTION}`;
+    const data = await client.fetch(query);
+    return (data || []).map(normalizeService);
+  } catch (error) {
+    console.error("Ошибка загрузки услуг из Sanity:", error);
+    return [];
+  }
+}
+
+export async function getService(id: string): Promise<Service | null> {
+  try {
+    const query = `*[_type == "service" && slug.current == $id][0] ${SERVICE_PROJECTION}`;
+    const data = await client.fetch(query, { id });
+    return data ? normalizeService(data) : null;
+  } catch (error) {
+    console.error("Ошибка загрузки услуги из Sanity:", error);
+    return null;
+  }
+}
