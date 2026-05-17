@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0d0d0d;
+  --bg-elevated: #141414;
+  --bg-soft: #161616;
+  --bg-deeper: #0a0a0a;
+  --text: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-faint: rgba(255, 255, 255, 0.4);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-soft: rgba(255, 255, 255, 0.05);
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --accent: #00FF99;
+  --accent-soft: rgba(0, 255, 153, 0.1);
+  --accent-glow: rgba(0, 255, 153, 0.25);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.light {
+  --bg: #f0f1f5;
+  --bg-elevated: #ffffff;
+  --bg-soft: #f0f1f5;
+  --bg-deeper: #e4e5ea;
+  --text: #111111;
+  --text-muted: #333333;
+  --text-faint: #666666;
+  --border: #d0d0d5;
+  --border-soft: #dcdce0;
+  --surface: #f5f5f8;
+  --surface-hover: #eaeaee;
+  --accent: #111111;
+  --accent-soft: rgba(0, 0, 0, 0.05);
+  --accent-glow: rgba(0, 0, 0, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+@layer utilities {
+  /* ═══ Светлая тема: зелёный → тёмно-зелёный ═══ */
+  .light .text-\[\#00FF99\] { color: #007a4d !important; }
+  .light .bg-\[\#00FF99\] { background-color: #007a4d !important; }
+  .light .border-\[\#00FF99\] { border-color: #007a4d !important; }
+  .light .border-\[\#00FF99\]\/30 { border-color: rgba(0, 122, 77, 0.3) !important; }
+  .light .border-\[\#00FF99\]\/20 { border-color: rgba(0, 122, 77, 0.2) !important; }
+  .light .bg-\[\#00FF99\]\/10 { background-color: rgba(0, 122, 77, 0.1) !important; }
+  .light .bg-\[\#00FF99\]\/5 { background-color: rgba(0, 122, 77, 0.05) !important; }
+  .light .bg-\[\#00FF99\]\/15 { background-color: rgba(0, 122, 77, 0.15) !important; }
+  .light .bg-\[\#00FF99\]\/20 { background-color: rgba(0, 122, 77, 0.2) !important; }
+  .light .bg-\[\#00FF99\]\/30 { background-color: rgba(0, 122, 77, 0.3) !important; }
+  .light .fill-\[\#00FF99\] { fill: #007a4d !important; }
+
+  /* Блюры скрыть */
+  .light .blur-\[120px\] { opacity: 0 !important; }
+  .light .blur-\[140px\] { opacity: 0 !important; }
+}
+
+@layer utilities {
+  /* Карточки — тень и подъём при ховере */
+  .light .rounded-3xl,
+  .light .rounded-\[28px\],
+  .light .rounded-\[32px\] {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 20px rgba(0, 0, 0, 0.03) !important;
+    transition: box-shadow 0.3s ease, transform 0.3s ease !important;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .light .rounded-3xl:hover,
+  .light .rounded-\[28px\]:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 12px 40px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Хедер — frosted glass */
+  .light header {
+    background: rgba(240, 241, 245, 0.8) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+  }
+
+  /* Фон — мягкий градиент вместо плоского цвета */
+  .light main {
+    background: linear-gradient(
+      180deg,
+      #edeef2 0%,
+      #f0f1f5 30%,
+      #e8e9ed 70%,
+      #edeef2 100%
+    ) !important;
+    background-attachment: fixed !important;
+  }
 }
