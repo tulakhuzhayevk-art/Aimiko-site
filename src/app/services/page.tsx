@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Clock, MessageCircle, Phone, Send, Shield, ShoppingCart } from "lucide-react";
+import { Check, ChevronRight, Clock, MapPin, MessageCircle, Phone, Send, Shield, ShoppingCart, Sparkles, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -8,7 +8,8 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getServices, type Service } from "@/sanity/queries";
 import { useCart } from "@/lib/cart-context";
-
+const WHATSAPP = "https://wa.me/79882564919";
+const TELEGRAM = "https://t.me/Aimiko_Admin"
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,11 +66,24 @@ export default function ServicesPage() {
           <span style={{ color: "var(--text)" }}>Услуги</span>
         </div>
 
-        <div className="mb-10">
-          <h1 className="text-3xl font-black lg:text-5xl">Услуги</h1>
-          <p className="mt-3 max-w-2xl text-lg" style={{ color: "var(--text-muted)" }}>
-            Сборка батарей, ремонт электровелосипедов, диагностика. Работаем в Москве.
+        <div className="mb-12 max-w-3xl">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold" style={{ borderColor: "rgba(0,255,153,0.3)", background: "rgba(0,255,153,0.08)", color: "#00FF99" }}>
+            <Sparkles size={12} /> Сервис Aimiko
+          </div>
+          <h1 className="text-4xl font-black leading-tight lg:text-6xl">
+            Соберём, отремонтируем, <span className="text-[#00FF99]">оживим.</span>
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: "var(--text-muted)" }}>
+            Делаем то, что не получается у других. Аккумуляторы под заказ, ремонт электровелосипедов любых брендов, диагностика с письменным отчётом.
           </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="flex h-12 items-center gap-2 rounded-xl bg-[#00FF99] px-6 text-sm font-bold text-black transition hover:scale-105">
+              <MessageCircle size={18} /> Обсудить в WhatsApp
+            </a>
+            <a href={TELEGRAM} target="_blank" rel="noopener noreferrer" className="flex h-12 items-center gap-2 rounded-xl border px-6 text-sm font-bold transition hover:text-[#00FF99]" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+              <Send size={18} /> Telegram
+            </a>
+          </div>
         </div>
 
         {isLoading ? (
@@ -79,15 +93,15 @@ export default function ServicesPage() {
             ))}
           </div>
         ) : services.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-12 lg:space-y-20">
             {services.map((service) => (
               <Link
                 key={service.id}
                 href={`/services/${service.id}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border transition hover:border-[#00FF99]/40"
+                className="group grid gap-8 lg:gap-12 lg:grid-cols-2 items-center overflow-hidden rounded-2xl border p-4 lg:p-6 transition hover:border-[#00FF99]/40"
                 style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "var(--bg-deeper)" }}>
+               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl" style={{ background: "var(--bg-deeper)" }}>
                   {service.images[0] ? (
                     <img src={service.images[0]} alt={service.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                   ) : (
@@ -103,10 +117,10 @@ export default function ServicesPage() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-lg font-bold leading-tight group-hover:text-[#00FF99]">{service.name}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                    {service.shortDescription}
-                  </p>
+                <h3 className="text-2xl lg:text-3xl font-black leading-tight group-hover:text-[#00FF99]">{service.name}</h3>
+                <p className="mt-4 text-base lg:text-lg leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                      {service.shortDescription}
+                    </p>
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     {service.duration && (
@@ -120,15 +134,30 @@ export default function ServicesPage() {
                       </span>
                     )}
                   </div>
-
-                  <div className="mt-auto pt-5">
-                    <p className="text-xs" style={{ color: "var(--text-faint)" }}>Стоимость</p>
-                    <p className="mt-1 text-2xl font-black text-[#00FF99]">{service.price}</p>
-                  </div>
-
-                  <div className="mt-4 flex h-10 w-full items-center justify-center rounded-xl bg-[#00FF99] text-sm font-semibold text-black">
-                    Подробнее
-                  </div>
+                  {service.includes && service.includes.length > 0 && (
+                      <div className="mt-6">
+                        <p className="text-sm font-semibold mb-3">Что входит:</p>
+                        <ul className="space-y-2">
+                          {service.includes.map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-muted)" }}>
+                              <Check size={16} className="mt-0.5 text-[#00FF99] shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  <div className="mt-7 rounded-2xl border p-5" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+                      <div className="flex flex-wrap items-end justify-between gap-4">
+                        <div>
+                          <p className="text-xs" style={{ color: "var(--text-faint)" }}>Стоимость</p>
+                          <p className="mt-1 text-3xl font-black text-[#00FF99]">{service.price}</p>
+                        </div>
+                        <div className="flex h-11 items-center gap-2 rounded-xl bg-[#00FF99] px-5 text-sm font-bold text-black transition group-hover:scale-105">
+                          <MessageCircle size={16} /> Подробнее
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </Link>
             ))}
