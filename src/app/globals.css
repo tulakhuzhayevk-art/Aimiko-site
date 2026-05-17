@@ -29,9 +29,9 @@
   --border-soft: #dcdce0;
   --surface: #f5f5f8;
   --surface-hover: #eaeaee;
-  --accent: #111111;
-  --accent-soft: rgba(0, 0, 0, 0.05);
-  --accent-glow: rgba(0, 0, 0, 0.08);
+  --accent: #059669;
+--accent-soft: rgba(5, 150, 105, 0.1);
+--accent-glow: rgba(5, 150, 105, 0.2);
 }
 
 html, body {
@@ -50,19 +50,20 @@ html, body {
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
 
 @layer utilities {
-  /* ═══ Светлая тема: зелёный → тёмно-зелёный ═══ */
-  .light .text-\[\#00FF99\] { color: #007a4d !important; }
-  .light .bg-\[\#00FF99\] { background-color: #007a4d !important; }
-  .light .border-\[\#00FF99\] { border-color: #007a4d !important; }
-  .light .border-\[\#00FF99\]\/30 { border-color: rgba(0, 122, 77, 0.3) !important; }
-  .light .border-\[\#00FF99\]\/20 { border-color: rgba(0, 122, 77, 0.2) !important; }
-  .light .bg-\[\#00FF99\]\/10 { background-color: rgba(0, 122, 77, 0.1) !important; }
-  .light .bg-\[\#00FF99\]\/5 { background-color: rgba(0, 122, 77, 0.05) !important; }
-  .light .bg-\[\#00FF99\]\/15 { background-color: rgba(0, 122, 77, 0.15) !important; }
-  .light .bg-\[\#00FF99\]\/20 { background-color: rgba(0, 122, 77, 0.2) !important; }
-  .light .bg-\[\#00FF99\]\/30 { background-color: rgba(0, 122, 77, 0.3) !important; }
-  .light .fill-\[\#00FF99\] { fill: #007a4d !important; }
-
+  /* ═══ Светлая тема: зелёный → насыщенный изумрудный ═══ */
+  .light .text-\[\#00FF99\] { color: #059669 !important; }
+  .light .bg-\[\#00FF99\] { background-color: #059669 !important; color: #ffffff !important; }
+  .light .border-\[\#00FF99\] { border-color: #059669 !important; }
+  .light .border-\[\#00FF99\]\/30 { border-color: rgba(5, 150, 105, 0.4) !important; }
+  .light .border-\[\#00FF99\]\/20 { border-color: rgba(5, 150, 105, 0.3) !important; }
+  .light .bg-\[\#00FF99\]\/10 { background-color: rgba(5, 150, 105, 0.12) !important; }
+  .light .bg-\[\#00FF99\]\/5 { background-color: rgba(5, 150, 105, 0.06) !important; }
+  .light .bg-\[\#00FF99\]\/15 { background-color: rgba(5, 150, 105, 0.18) !important; }
+  .light .bg-\[\#00FF99\]\/20 { background-color: rgba(5, 150, 105, 0.22) !important; }
+  .light .bg-\[\#00FF99\]\/30 { background-color: rgba(5, 150, 105, 0.32) !important; }
+  .light .fill-\[\#00FF99\] { fill: #059669 !important; }
+  /* Текст внутри зелёных кнопок — белый */
+  .light .bg-\[\#00FF99\] * { color: #ffffff !important; }
   /* Блюры скрыть */
   .light .blur-\[120px\] { opacity: 0 !important; }
   .light .blur-\[140px\] { opacity: 0 !important; }

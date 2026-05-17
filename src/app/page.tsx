@@ -457,6 +457,7 @@ function ProductCard({ product }: { product: Product }) {
               style={{ color: "var(--text-muted)" }}
             >
              <a className="transition hover:text-[#00FF99]" href="/catalog">Каталог</a>
+             <a className="transition hover:text-[#00FF99]" href="/services">Услуги</a>
               <a className="transition hover:text-[#00FF99]" href="#categories">Категории</a>
               <a className="transition hover:text-[#00FF99]" href="#advantages">Преимущества</a>
               <a className="transition hover:text-[#00FF99]" href="#delivery">Доставка</a>
@@ -632,12 +633,13 @@ function ProductCard({ product }: { product: Product }) {
               </div>
             </div>
             <nav className="flex flex-col gap-2 p-5 text-lg">
-              {[
-                ["Каталог", "/catalog"],
-                ["Категории", "#categories"],
-                ["Преимущества", "#advantages"],
-                ["Доставка", "#delivery"],
-                ["Контакты", "#contacts"],
+            {[
+              ["Каталог", "/catalog"],
+              ["Услуги", "/services"],
+              ["Категории", "#categories"],
+              ["Преимущества", "#advantages"],
+              ["Доставка", "#delivery"],
+              ["Контакты", "#contacts"],
               ].map(([label, href]) => (
                 <a
                   key={href}
@@ -1243,11 +1245,17 @@ function ProductCard({ product }: { product: Product }) {
             </div>
             {/* Col 3 */}
             <div>
-              <h4 className="font-bold">Каталог</h4>
+            <h4 className="font-bold">Навигация</h4>
               <div
                 className="mt-4 space-y-2 text-sm"
                 style={{ color: "var(--text-muted)" }}
               >
+                <a href="/catalog" className="block transition hover:text-[#00FF99]">
+                  Каталог
+                </a>
+                <a href="/services" className="block transition hover:text-[#00FF99]">
+                  Услуги
+                </a>
                 {categories.map((c) => (
                   <button
                     key={c.id}

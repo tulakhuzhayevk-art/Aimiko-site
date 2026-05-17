@@ -67,7 +67,7 @@ export default function ServicesPage() {
         </div>
 
         <div className="mb-12 max-w-3xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold" style={{ borderColor: "rgba(0,255,153,0.3)", background: "rgba(0,255,153,0.08)", color: "#00FF99" }}>
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00FF99] bg-[#00FF99]/10 px-3 py-1.5 text-xs font-semibold text-[#00FF99]">
             <Sparkles size={12} /> Сервис Aimiko
           </div>
           <h1 className="text-4xl font-black leading-tight lg:text-6xl">
