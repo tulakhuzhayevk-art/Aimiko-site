@@ -198,58 +198,66 @@ export default function CatalogPage() {
         </div>
       </div>
       <div>
-        <label className="mb-2 block text-sm font-semibold">Категория</label>
-        <div className="space-y-1">
-          <button onClick={() => setActiveCategoryId(null)} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${!activeCategoryId ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`} style={activeCategoryId ? { color: "var(--text-muted)" } : {}}>
-            <span>Все товары</span><span className="text-xs" style={{ color: "var(--text-faint)" }}>{allProducts.length}</span>
-          </button>
-          {categories.map((cat) => {
-            const count = allProducts.filter((p) => p.categoryId === cat.id).length;
-            const isActive = activeCategoryId === cat.id;
-            return (
-              <button key={cat.id} onClick={() => setActiveCategoryId(isActive ? null : cat.id)} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${isActive ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`} style={!isActive ? { color: "var(--text-muted)" } : {}}>
-                <span>{cat.title}</span><span className="text-xs" style={{ color: "var(--text-faint)" }}>{count}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      {activeCategoryId && (
-        <div>
-          <label className="mb-2 block text-sm font-semibold">Подкатегория</label>
+          <label className="mb-2 block text-sm font-semibold">Категория</label>
           <div className="space-y-1">
             <button
-              onClick={() => setActiveSubcategoryId(null)}
-              className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${!activeSubcategoryId ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`}
-              style={activeSubcategoryId ? { color: "var(--text-muted)" } : {}}
+              onClick={() => { setActiveCategoryId(null); setActiveSubcategoryId(null); }}
+              className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${!activeCategoryId ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`}
+              style={activeCategoryId ? { color: "var(--text-muted)" } : {}}
             >
-              <span>Все подкатегории</span>
-              <span className="text-xs" style={{ color: "var(--text-faint)" }}>
-                {allProducts.filter((p) => p.categoryId === activeCategoryId).length}
-              </span>
+              <span>Все товары</span>
+              <span className="text-xs" style={{ color: "var(--text-faint)" }}>{allProducts.length}</span>
             </button>
-            {subcategories
-              .filter((sub) => sub.categoryId === activeCategoryId)
-              .map((sub) => {
-                const count = allProducts.filter((p) => p.subcategoryId === sub.id).length;
-                const isActive = activeSubcategoryId === sub.id;
-                return (
+
+            {categories.map((cat) => {
+              const count = allProducts.filter((p) => p.categoryId === cat.id).length;
+              const isActive = activeCategoryId === cat.id;
+              const catSubs = subcategories.filter((sub) => sub.categoryId === cat.id);
+              return (
+                <div key={cat.id}>
                   <button
-                    key={sub.id}
-                    onClick={() => setActiveSubcategoryId(isActive ? null : sub.id)}
+                    onClick={() => { setActiveCategoryId(isActive ? null : cat.id); setActiveSubcategoryId(null); }}
                     className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm transition ${isActive ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`}
                     style={!isActive ? { color: "var(--text-muted)" } : {}}
                   >
-                    <span className="text-left">{sub.title}</span>
-                    <span className="text-xs shrink-0 ml-2" style={{ color: "var(--text-faint)" }}>
-                      {count}
+                    <span className="flex items-center gap-1.5">
+                      {catSubs.length > 0 && (
+                        <ChevronRight
+                          size={14}
+                          className="transition-transform"
+                          style={{ transform: isActive ? "rotate(90deg)" : "none" }}
+                        />
+                      )}
+                      {cat.title}
                     </span>
+                    <span className="text-xs" style={{ color: "var(--text-faint)" }}>{count}</span>
                   </button>
-                );
-              })}
+
+                  {isActive && catSubs.length > 0 && (
+                    <div className="mt-1 ml-3 space-y-0.5 border-l pl-2" style={{ borderColor: "var(--border)" }}>
+                      {catSubs.map((sub) => {
+                        const subCount = allProducts.filter((p) => p.subcategoryId === sub.id).length;
+                        const subActive = activeSubcategoryId === sub.id;
+                        return (
+                          <button
+                            key={sub.id}
+                            onClick={() => setActiveSubcategoryId(subActive ? null : sub.id)}
+                            className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition ${subActive ? "bg-[#00FF99]/10 font-semibold text-[#00FF99]" : ""}`}
+                            style={!subActive ? { color: "var(--text-muted)" } : {}}
+                          >
+                            <span className="text-left">{sub.title}</span>
+                            <span className="text-xs shrink-0 ml-2" style={{ color: "var(--text-faint)" }}>{subCount}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
-      )}
+        
       <div>
         <label className="mb-2 block text-sm font-semibold">Наличие</label>
         <div className="space-y-1">
