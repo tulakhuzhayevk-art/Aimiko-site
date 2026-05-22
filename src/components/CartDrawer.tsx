@@ -56,7 +56,7 @@ export function CartDrawer() {
   );
 
   const whatsappLink = `https://wa.me/79882564919?text=${orderText}`;
-  const telegramLink = `https://t.me/aimiko?text=${orderText}`;
+  const telegramLink = `https://t.me/Aimiko_Admin?text=${orderText}`;
 
   const handleRemove = (productId: string) => {
     setRemovingId(productId);

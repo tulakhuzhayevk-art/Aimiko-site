@@ -222,7 +222,7 @@ export default function ProductPage() {
 
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl border text-sm font-semibold transition hover:border-[#00FF99]/30 hover:text-[#00FF99]" style={{ borderColor: "var(--border)" }}><MessageCircle size={16} />Запросить опт</a>
-                <a href="https://t.me/aimiko" target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl border text-sm font-semibold transition hover:border-[#00FF99]/30 hover:text-[#00FF99]" style={{ borderColor: "var(--border)" }}><Send size={16} />Telegram</a>
+                <a href="https://t.me/Aimiko_Admin" target="_blank" rel="noopener noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl border text-sm font-semibold transition hover:border-[#00FF99]/30 hover:text-[#00FF99]" style={{ borderColor: "var(--border)" }}><Send size={16} />Telegram</a>
               </div>
             </div>
 
@@ -281,7 +281,7 @@ export default function ProductPage() {
               <h4 className="font-bold">Контакты</h4>
               <div className="mt-3 space-y-2 text-sm" style={{ color: "var(--text-muted)" }}>
                 <a href="tel:+79882564919" className="flex items-center gap-2 transition hover:text-[#00FF99]"><Phone size={14} /> +7 988 256-49-19</a>
-                <a href="mailto:info@aimiko.ru" className="flex items-center gap-2 transition hover:text-[#00FF99]"><Mail size={14} /> info@aimiko.ru</a>
+                <a href="mailto:aimiko.menegment@mail.ru" className="flex items-center gap-2 transition hover:text-[#00FF99]"><Mail size={14} /> aimiko.menegment@mail.ru</a>
                 <p className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 shrink-0" />Москва, ул. Вернисажная, 13</p>
               </div>
             </div>
@@ -296,7 +296,7 @@ export default function ProductPage() {
               <h4 className="font-bold">Соцсети</h4>
               <div className="mt-3 flex gap-3">
                 <a href="https://wa.me/79882564919" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-xl border transition hover:text-[#00FF99]" style={{ borderColor: "var(--border)", background: "var(--surface)" }}><MessageCircle size={16} /></a>
-                <a href="https://t.me/aimiko" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-xl border transition hover:text-[#00FF99]" style={{ borderColor: "var(--border)", background: "var(--surface)" }}><Send size={16} /></a>
+                <a href="https://t.me/Aimiko_Admin" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center rounded-xl border transition hover:text-[#00FF99]" style={{ borderColor: "var(--border)", background: "var(--surface)" }}><Send size={16} /></a>
               </div>
             </div>
           </div>

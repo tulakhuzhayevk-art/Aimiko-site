@@ -28,6 +28,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories, type Category } from "@/data/categories";
 import { type Product } from "@/data/products";
@@ -172,10 +173,11 @@ function ProductCard({ product }: { product: Product }) {
     setImageIndex((c) => (c - 1 + product.images.length) % product.images.length);
 
   return (
+    <Link href={`/catalog/${product.id}`} className="block">
     <motion.div
       variants={fadeUp}
       whileHover={{ y: -8 }}
-      className="group flex flex-col overflow-hidden rounded-[28px] border shadow-xl shadow-black/20 transition"
+      className="group flex flex-col overflow-hidden rounded-[28px] border shadow-xl shadow-black/20 transition cursor-pointer"
       style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
     >
       {/* Image area */}
@@ -229,14 +231,14 @@ function ProductCard({ product }: { product: Product }) {
           <>
             <button
               type="button"
-              onClick={prevImage}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); prevImage(); }}
               className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               type="button"
-              onClick={nextImage}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); nextImage(); }}
               className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
             >
               <ChevronRight size={18} />
@@ -246,7 +248,7 @@ function ProductCard({ product }: { product: Product }) {
                 <button
                   key={image}
                   type="button"
-                  onClick={() => setImageIndex(index)}
+                  onClick={(e) => { e.stopPropagation(); e.preventDefault(); setImageIndex(index); }}
                   className={`h-2 rounded-full transition ${
                     imageIndex === index
                       ? "w-6 bg-[#00FF99]"
@@ -312,18 +314,25 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
-          <button
-            onClick={() => addItem(product)}
+        <button
+            onClick={(e) => { e.stopPropagation(); e.preventDefault(); addItem(product); }}
             className="h-12 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:shadow-[0_0_35px_rgba(0,255,153,0.25)]"
           >
             В корзину
           </button>
-          <a
-            href={`https://wa.me/79882564919?text=${encodeURIComponent(
-              `Здравствуйте! Интересует оптовая цена на ${product.name}.`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              window.open(
+                `https://wa.me/79882564919?text=${encodeURIComponent(
+                  `Здравствуйте! Интересует оптовая цена на ${product.name}.`
+                )}`,
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
             className="flex h-12 items-center justify-center rounded-xl border transition hover:border-[#00FF99]/30"
             style={{
               borderColor: "var(--border)",
@@ -331,10 +340,11 @@ function ProductCard({ product }: { product: Product }) {
             }}
           >
             Запросить опт
-          </a>
-        </div>
+          </button>
+          </div>
       </div>
     </motion.div>
+    </Link>
   );
 }
 
@@ -664,7 +674,7 @@ function ProductCard({ product }: { product: Product }) {
                   <MessageCircle size={18} /> WhatsApp
                 </a>
                 <a
-                  href="https://t.me/aimiko"
+                  href="https://t.me/Aimiko_Admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-14 items-center justify-center gap-2 rounded-xl border"
@@ -1182,7 +1192,7 @@ function ProductCard({ product }: { product: Product }) {
                 <MessageCircle size={18} /> WhatsApp
                 </a>
                 <a
-                  href="https://t.me/aimiko"
+                  href="https://t.me/Aimiko_Admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-14 items-center justify-center gap-2 rounded-2xl border px-8 transition"
@@ -1235,10 +1245,10 @@ function ProductCard({ product }: { product: Product }) {
                   <Phone size={16} /> +7 988 256-49-19
                 </a>
                 <a
-                  href="mailto:info@aimiko.ru"
+                  href="mailto:aimiko.menegment@mail.ru"
                   className="flex items-center gap-2 transition hover:text-[#00FF99]"
                 >
-                  <Mail size={16} /> info@aimiko.ru
+                  <Mail size={16} /> aimiko.menegment@mail.ru
                 </a>
                 <p className="flex items-start gap-2">
                   <MapPin size={16} className="mt-0.5 shrink-0" />
@@ -1288,7 +1298,7 @@ function ProductCard({ product }: { product: Product }) {
                   <MessageCircle size={18} />
                 </a>
                 <a
-                  href="https://t.me/aimiko"
+                  href="https://t.me/Aimiko_Admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-11 w-11 items-center justify-center rounded-xl border transition hover:text-[#00FF99]"
