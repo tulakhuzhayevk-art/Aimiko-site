@@ -168,7 +168,7 @@ export default function ProductPage() {
             <div className="mt-4">
               {activeTab === "specs" ? (
                 <div className="space-y-1">
-                  {product.specs.map((spec, idx) => (
+                  {product.specs.map((spec: { label: string; value: string }, idx: number) => (
                     <div key={spec.label} className="flex items-center justify-between rounded-xl px-4 py-3" style={{ background: idx % 2 === 0 ? "var(--surface)" : "transparent" }}>
                       <span style={{ color: "var(--text-faint)" }}>{spec.label}</span>
                       <span className="font-semibold">{spec.value}</span>
