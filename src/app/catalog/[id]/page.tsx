@@ -141,7 +141,7 @@ export default function ProductPage() {
             </div>
             {hasManyImages && (
               <div className="mt-4 flex gap-3">
-                {product.images.map((img, idx) => (
+                {product.images.map((img: string, idx: number) => (
                   <button key={img} onClick={() => setImageIndex(idx)} className={`h-20 w-20 overflow-hidden rounded-xl border-2 transition ${imageIndex === idx ? "border-[#00FF99]" : "border-transparent opacity-50 hover:opacity-100"}`} style={{ background: "var(--bg-deeper)" }}>
                     <img src={img} alt="" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </button>
