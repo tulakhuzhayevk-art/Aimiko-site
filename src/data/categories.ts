@@ -57,5 +57,4 @@ export const subcategories: Subcategory[] = [
   // → assembly
   { id: "bms", title: "BMS и расходники", categoryId: "assembly" },
   { id: "welding-tools", title: "Точечная сварка и инструменты", categoryId: "assembly" },
-  { id: "services", title: "Услуги (сборка, диагностика)", categoryId: "assembly" },
 ];

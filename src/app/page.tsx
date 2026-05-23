@@ -28,7 +28,9 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { Preloader } from "@/components/Preloader";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories, type Category } from "@/data/categories";
 import { type Product } from "@/data/products";
@@ -58,7 +60,7 @@ function YoutubeIcon({ size = 18 }: { size?: number }) {
 /* ───── Data ───── */
 const heroSlides = [
   { title: "Оптовые цены", accent: "электровелосипеды Aimiko", text: "Собственный бренд • прямые поставки • самовывоз в Москве" },
-  { title: "Официальный поставщик", accent: "аккумуляторов EVE, DMEGC и BMC", text: "Честный знак • быстрая отправка по России и СНГ" },
+  { title: "Официальный поставщик", accent: "аккумуляторов EVE, DMEGC и BMS", text: "Честный знак • быстрая отправка по России и СНГ" },
   { title: "Для мастерских и магазинов", accent: "опт и мелкий опт", text: "Аккумуляторы • моторы • контроллеры • запчасти" },
 ];
 
@@ -352,6 +354,7 @@ function ProductCard({ product }: { product: Product }) {
    HomePage
    ═══════════════════════════════════════════════════════════════════════════════ */
    export default function HomePage() {
+    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
     const [activeSlide, setActiveSlide] = useState(0);
     const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
@@ -433,7 +436,7 @@ function ProductCard({ product }: { product: Product }) {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       <CartDrawer />
-
+      <Preloader />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
@@ -912,7 +915,7 @@ function ProductCard({ product }: { product: Product }) {
                   key={category.id}
                   category={{ ...category, count }}
                   isActive={activeCategoryId === category.id}
-                  onClick={() => handleSelectCategory(category.id)}
+                  onClick={() => router.push(`/catalog?category=${category.id}`)}
                 />
               );
             })}

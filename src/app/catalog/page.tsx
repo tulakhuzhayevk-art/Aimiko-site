@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
@@ -125,6 +126,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
 }
 
 export default function CatalogPage() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<string | null>(null);
@@ -154,6 +156,13 @@ export default function CatalogPage() {
 
   // При смене категории сбрасываем подкатегорию (чтобы не остался "осиротевший" фильтр)
   useEffect(() => { setActiveSubcategoryId(null); }, [activeCategoryId]);
+  // Читаем ?category= из URL при заходе с главной
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) {
+      setActiveCategoryId(cat);
+    }
+  }, [searchParams]);
 
   const filteredProducts = useMemo<Product[]>(() => {
     let result = [...allProducts];
