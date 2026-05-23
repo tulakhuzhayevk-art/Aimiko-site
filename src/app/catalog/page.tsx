@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -125,7 +125,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
   );
 }
 
-export default function CatalogPage() {
+function CatalogContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
@@ -477,5 +477,13 @@ export default function CatalogPage() {
         {showMobileFilters && (<><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowMobileFilters(false)} className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm lg:hidden" /><motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ type: "spring", damping: 28, stiffness: 280 }} className="fixed left-0 top-0 z-[80] h-full w-[320px] overflow-y-auto border-r p-5 lg:hidden" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}><div className="mb-5 flex items-center justify-between"><div className="flex items-center gap-2"><SlidersHorizontal size={18} className="text-[#00FF99]" /><span className="text-lg font-bold">Фильтры</span></div><button onClick={() => setShowMobileFilters(false)} className="flex h-10 w-10 items-center justify-center rounded-xl border" style={{ borderColor: "var(--border)" }}><X size={18} /></button></div>{filtersContent}<button onClick={() => setShowMobileFilters(false)} className="mt-6 h-12 w-full rounded-xl bg-[#00FF99] font-semibold text-black">Показать {filteredProducts.length} товаров</button></motion.div></>)}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function CatalogPage() {
+  return (
+    <Suspense fallback={null}>
+      <CatalogContent />
+    </Suspense>
   );
 }
