@@ -26,34 +26,7 @@ export function Preloader() {
         className="mt-12 mb-16 h-24 w-auto object-contain"
         onError={(e) => { e.currentTarget.style.display = "none"; }}
       />
-      <div className="relative h-32 w-[340px]">
-        <motion.div
-          initial={{ x: -40 }}
-          animate={{ x: 280 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-          className="absolute bottom-6 h-16 w-16 rounded-full blur-2xl"
-          style={{ background: "var(--accent)", opacity: 0.4 }}
-        />
-        {[0, 1, 2, 3, 4].map((i) => (
-          <motion.div
-            key={i}
-            className="absolute bottom-7 h-1.5 w-1.5 rounded-full"
-            style={{ background: "var(--accent)" }}
-            initial={{ x: -20, opacity: 0, scale: 1 }}
-            animate={{
-              x: [(-20 + i * 4), 200 + i * 10],
-              opacity: [0, 0.7, 0],
-              scale: [1, 0.3],
-              y: [0, -8 - i * 3],
-            }}
-            transition={{
-              duration: 1.2,
-              ease: "easeOut",
-              repeat: Infinity,
-              delay: i * 0.15,
-            }}
-          />
-        ))}
+      <div className="relative h-20 w-[340px]">
         <motion.div
           initial={{ x: -50 }}
           animate={{ x: 290, y: [0, -3, 0, -2, 0] }}

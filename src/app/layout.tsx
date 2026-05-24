@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "Aimiko — Оптовые цены на электротранспорт",
   description:
     "Электровелосипеды, электросамокаты, аккумуляторы EVE, DMEGC, BMC DALY. Опт и розница. Самовывоз в Москве, доставка по России и СНГ.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
