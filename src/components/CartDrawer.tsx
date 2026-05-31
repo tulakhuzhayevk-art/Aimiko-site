@@ -34,6 +34,14 @@ export function CartDrawer() {
   } = useCart();
 
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [showCheckoutOptions, setShowCheckoutOptions] = useState(false);
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerCity, setCustomerCity] = useState("");
+  const [customerAddress, setCustomerAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Наличные");
+  const [customerComment, setCustomerComment] = useState("");
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   const deliveryProgress = Math.min(
     (totalPrice / FREE_DELIVERY_THRESHOLD) * 100,
@@ -55,8 +63,55 @@ export function CartDrawer() {
     }`
   );
 
-  const whatsappLink = `https://wa.me/79882564919?text=${orderText}`;
-  const telegramLink = `https://t.me/Aimiko_Admin?text=${orderText}`;
+  const orderMessage = decodeURIComponent(orderText);
+  const whatsappLink = `https://wa.me/79895772177?text=${orderText}`;
+  const telegramLink = `https://t.me/aimikoorders_bot`;
+
+  const sendOrderToTelegram = async () => {
+    if (!customerPhone.trim()) {
+      alert("Укажите номер телефона для связи");
+      return;
+    }
+
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: `🛒 Новый заказ Aimiko
+
+👤 Клиент: ${customerName || "Не указано"}
+📞 Телефон: ${customerPhone || "Не указано"}
+🏙 Город: ${customerCity || "Не указано"}
+📍 Адрес: ${customerAddress || "Не указано"}
+💳 Оплата: ${paymentMethod}
+💬 Комментарий: ${customerComment || "Нет"}
+
+${orderMessage}`,
+        name: customerName,
+        phone: customerPhone,
+        city: customerCity,
+        address: customerAddress,
+        payment: paymentMethod,
+        comment: customerComment,
+        items: orderLines,
+        total: formatPrice(totalPrice),
+      }),
+    });
+
+    if (!res.ok) {
+      alert("Не получилось отправить заказ. Попробуйте WhatsApp.");
+      return;
+    }
+
+    setOrderSuccess(true);
+    setShowCheckoutOptions(false);
+
+    setTimeout(() => {
+      setOrderSuccess(false);
+      clear();
+      closeCart();
+    }, 3000);
+  };
 
   const handleRemove = (productId: string) => {
     setRemovingId(productId);
@@ -354,30 +409,86 @@ export function CartDrawer() {
                     Оптовые цены обсуждаются отдельно после оформления.
                   </p>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <a
-                      href={whatsappLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:scale-[1.02]"
-                    >
-                      <MessageCircle size={18} />
-                      WhatsApp
-                    </a>
-                    <a
-                      href={telegramLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-12 items-center justify-center gap-2 rounded-xl border font-semibold transition hover:opacity-80"
-                      style={{
-                        borderColor: "var(--border)",
-                        background: "var(--surface)",
-                      }}
-                    >
-                      <Send size={16} />
-                      Telegram
-                    </a>
-                  </div>
+                  {orderSuccess && (
+                    <div className="mb-4 rounded-2xl border border-[#00FF99]/40 bg-[#00FF99]/10 p-5 text-center">
+                      <div className="mb-2 text-3xl">🎉</div>
+                      <div className="mb-2 text-lg font-black text-[#00FF99]">
+                        Заявка принята
+                      </div>
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                        Менеджер AIMIKO уже получил ваш заказ и скоро свяжется с вами для подтверждения.
+                      </p>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setShowCheckoutOptions((value) => !value)}
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:scale-[1.02]"
+                  >
+                    <ShoppingBag size={18} />
+                    Оформить заказ
+                  </button>
+
+                  {showCheckoutOptions && (
+                    <div className="mt-3 rounded-2xl border p-3" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+                      <div className="mb-4 grid gap-3">
+                        <input
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                          placeholder="Ваше имя"
+                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        />
+                        <input
+                          value={customerPhone}
+                          onChange={(e) => setCustomerPhone(e.target.value)}
+                          placeholder="Телефон для связи"
+                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        />
+                        <input
+                          value={customerCity}
+                          onChange={(e) => setCustomerCity(e.target.value)}
+                          placeholder="Город"
+                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        />
+                        <input
+                          value={customerAddress}
+                          onChange={(e) => setCustomerAddress(e.target.value)}
+                          placeholder="Адрес доставки"
+                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        />
+                        <select
+                          value={paymentMethod}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        >
+                          <option>Наличные</option>
+                          <option>Перевод на карту</option>
+                        </select>
+                        <textarea
+                          value={customerComment}
+                          onChange={(e) => setCustomerComment(e.target.value)}
+                          placeholder="Комментарий к заказу"
+                          className="min-h-20 rounded-xl border px-3 py-2 text-sm outline-none"
+                          style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
+                        />
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={sendOrderToTelegram}
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:scale-[1.02]"
+                      >
+                        <Send size={16} />
+                        Отправить заявку
+                      </button>
+                    </div>
+                  )}
 
                   <button
                     onClick={closeCart}

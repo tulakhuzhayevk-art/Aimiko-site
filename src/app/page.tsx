@@ -479,7 +479,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Search */}
-          <div className="relative hidden max-w-xl flex-1 lg:flex">
+          <div className="relative flex max-w-xl flex-1">
             <div
               className="flex h-12 w-full items-center rounded-2xl border px-5 transition focus-within:border-[#00FF99]/50"
               style={{ borderColor: "var(--border)", background: "var(--bg-soft)" }}

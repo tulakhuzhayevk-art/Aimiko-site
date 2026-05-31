@@ -288,7 +288,7 @@ function CatalogContent() {
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
           </Link>
-          <div className="relative hidden max-w-lg flex-1 lg:flex">
+          <div className="relative flex max-w-lg flex-1">
             <div className="flex h-10 w-full items-center rounded-xl border px-4 transition focus-within:border-[#00FF99]/50" style={{ borderColor: "var(--border)", background: "var(--bg-soft)" }}>
               <Search size={16} className="text-[#00FF99]" />
               <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Поиск по каталогу..." className="w-full bg-transparent px-3 text-sm outline-none" style={{ color: "var(--text)" }} />
@@ -383,7 +383,7 @@ function CatalogContent() {
             )}
 
 {isLoading ? (
-              <div className={view === "grid" ? "grid gap-5 sm:grid-cols-2 xl:grid-cols-3" : "space-y-4"}>
+              <div className={view === "grid" ? "grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3" : "space-y-4"}>
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
@@ -401,7 +401,7 @@ function CatalogContent() {
                 ))}
               </div>
             ) : paginatedProducts.length > 0 ? (
-              <motion.div key={`${activeCategoryId}-${sortBy}-${currentPage}-${view}`} initial="hidden" animate="visible" variants={stagger} className={view === "grid" ? "grid gap-5 sm:grid-cols-2 xl:grid-cols-3" : "space-y-4"}>
+              <motion.div key={`${activeCategoryId}-${sortBy}-${currentPage}-${view}`} initial="hidden" animate="visible" variants={stagger} className={view === "grid" ? "grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3" : "space-y-4"}>
                 {paginatedProducts.map((product) => <CatalogProductCard key={product.id} product={product} view={view} />)}
               </motion.div>
             ) : (
