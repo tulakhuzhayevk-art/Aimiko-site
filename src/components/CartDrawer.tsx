@@ -105,12 +105,8 @@ ${orderMessage}`,
 
     setOrderSuccess(true);
     setShowCheckoutOptions(false);
-
-    setTimeout(() => {
-      setOrderSuccess(false);
-      clear();
-      closeCart();
-    }, 3000);
+    clear();
+    closeCart();
   };
 
   const handleRemove = (productId: string) => {
@@ -123,6 +119,74 @@ ${orderMessage}`,
 
   return (
     <AnimatePresence>
+      {orderSuccess && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 px-5 backdrop-blur-xl"
+        >
+          <motion.div
+            initial={{ scale: 0.94, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.94, y: 20 }}
+            className="w-full max-w-md rounded-3xl border p-6 text-center shadow-2xl"
+            style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}
+          >
+            <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#00FF99]/15 text-4xl shadow-[0_0_35px_rgba(0,255,153,0.25)]">
+              🛵
+              <span className="absolute -right-2 -top-1 rounded-full bg-[#00FF99] px-2 py-1 text-xs font-black text-black">
+                OK
+              </span>
+            </div>
+
+            <h2 className="mb-3 text-2xl font-black text-[#00FF99]">
+              Мы получили вашу заявку
+            </h2>
+
+            <p className="mb-4 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Менеджер AIMIKO уже получил заказ и скоро свяжется с вами для подтверждения деталей.
+            </p>
+
+            <div className="mb-5 rounded-2xl border p-3 text-left text-xs leading-relaxed" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+              <div className="mb-1 font-bold text-[#00FF99]">Хотите быстрее?</div>
+              <div style={{ color: "var(--text-muted)" }}>
+                Напишите нам в WhatsApp или Telegram — менеджер сразу увидит ваш диалог и быстрее подтвердит наличие, оплату и доставку.
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href="https://wa.me/79895772177"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 items-center justify-center rounded-xl bg-[#00FF99] font-semibold text-black"
+              >
+                WhatsApp
+              </a>
+
+              <a
+                href="https://t.me/Aimiko_Admin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 items-center justify-center rounded-xl border font-semibold"
+                style={{ borderColor: "var(--border)" }}
+              >
+                Telegram
+              </a>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setOrderSuccess(false)}
+              className="mt-4 text-sm transition hover:text-[#00FF99]"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Закрыть
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
       {isOpen && (
         <>
           <motion.div
@@ -415,22 +479,45 @@ ${orderMessage}`,
                       <div className="mb-2 text-lg font-black text-[#00FF99]">
                         Заявка принята
                       </div>
-                      <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                      <p className="mb-4 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                         Менеджер AIMIKO уже получил ваш заказ и скоро свяжется с вами для подтверждения.
                       </p>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <a
+                          href="https://wa.me/79895772177"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-11 items-center justify-center rounded-xl bg-[#00FF99] font-semibold text-black"
+                        >
+                          WhatsApp
+                        </a>
+
+                        <a
+                          href="https://t.me/Aimiko_Admin"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-11 items-center justify-center rounded-xl border font-semibold"
+                          style={{ borderColor: "var(--border)" }}
+                        >
+                          Telegram
+                        </a>
+                      </div>
                     </div>
                   )}
 
-                  <button
-                    type="button"
-                    onClick={() => setShowCheckoutOptions((value) => !value)}
-                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:scale-[1.02]"
-                  >
-                    <ShoppingBag size={18} />
-                    Оформить заказ
-                  </button>
+                  {!orderSuccess && (
+                    <button
+                      type="button"
+                      onClick={() => setShowCheckoutOptions((value) => !value)}
+                      className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:scale-[1.02]"
+                    >
+                      <ShoppingBag size={18} />
+                      Оформить заказ
+                    </button>
+                  )}
 
-                  {showCheckoutOptions && (
+                  {!orderSuccess && showCheckoutOptions && (
                     <div className="mt-3 rounded-2xl border p-3" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
                       <div className="mb-4 grid gap-3">
                         <input
