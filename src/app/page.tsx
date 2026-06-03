@@ -776,7 +776,7 @@ function ProductCard({ product }: { product: Product }) {
             initial={{ opacity: 0, scale: 0.92, y: 45 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative"
+            className="relative hidden lg:block"
           >
             <div className="absolute -inset-10 bg-[#00FF99]/20 blur-[120px]" />
             <div
