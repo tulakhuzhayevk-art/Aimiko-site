@@ -28,7 +28,7 @@ export default function ServicesPage() {
       <CartDrawer />
 
       <header
-        className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl"
+        className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
         style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5">

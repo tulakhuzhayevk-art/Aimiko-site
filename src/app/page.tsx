@@ -443,7 +443,7 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ HEADER ════════════ */}
       <header
-        className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl"
+        className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
         style={{
           borderColor: "var(--border)",
           background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)",
@@ -622,7 +622,7 @@ function ProductCard({ product }: { product: Product }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] backdrop-blur-2xl xl:hidden"
+            className="fixed inset-0 z-[60] md:backdrop-blur-2xl xl:hidden"
             style={{
               background: "color-mix(in srgb, var(--bg) 95%, transparent)",
             }}

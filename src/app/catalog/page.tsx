@@ -302,7 +302,7 @@ function CatalogContent() {
     <div className="min-h-screen" style={{ background: "var(--bg)", color: "var(--text)" }}>
       <CartDrawer />
 
-      <header className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}>
+      <header className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}>
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5">
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />

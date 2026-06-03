@@ -124,7 +124,7 @@ ${orderMessage}`,
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 px-5 backdrop-blur-xl"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 px-5 md:backdrop-blur-xl"
         >
           <motion.div
             initial={{ scale: 0.94, y: 20 }}

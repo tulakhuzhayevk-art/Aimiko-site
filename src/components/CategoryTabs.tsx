@@ -15,7 +15,7 @@ export function CategoryTabs({ categories, activeId, onChange }: Props) {
 
   return (
     <div
-      className="sticky top-[64px] z-30 -mx-5 mb-5 border-b backdrop-blur-xl"
+      className="sticky top-[64px] z-30 -mx-5 mb-5 border-b md:backdrop-blur-xl"
       style={{
         borderColor: "var(--border)",
         background: "color-mix(in srgb, var(--bg) 80%, transparent)",
