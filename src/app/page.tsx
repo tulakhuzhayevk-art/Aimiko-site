@@ -353,11 +353,6 @@ function ProductCard({ product }: { product: Product }) {
    HomePage
    ═══════════════════════════════════════════════════════════════════════════════ */
    export default function HomePage() {
-    useEffect(() => {
-      const preventBfcache = () => {};
-      window.addEventListener("unload", preventBfcache);
-      return () => window.removeEventListener("unload", preventBfcache);
-    }, []);
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
     const [activeSlide, setActiveSlide] = useState(0);
