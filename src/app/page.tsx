@@ -28,7 +28,6 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
-import { PreloaderGate } from "@/components/PreloaderGate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -436,7 +435,6 @@ function ProductCard({ product }: { product: Product }) {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       <CartDrawer />
-      <PreloaderGate />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
