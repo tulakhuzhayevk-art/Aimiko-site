@@ -790,7 +790,7 @@ function ProductCard({ product }: { product: Product }) {
                 style={{ background: "var(--bg-deeper)" }}
               >
                 <video
-                  src="/hero.mp4"
+                  src="/hero.mp4" preload="metadata" poster="/hero-poster.jpg"
                   autoPlay
                   muted
                   loop
