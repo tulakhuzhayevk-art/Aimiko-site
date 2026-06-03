@@ -360,6 +360,7 @@ function ProductCard({ product }: { product: Product }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const [heroVideoKey, setHeroVideoKey] = useState(0);
+    const [isDesktop, setIsDesktop] = useState(false);
     const { totalItems, openCart } = useCart();
   
     useEffect(() => {
@@ -369,12 +370,22 @@ function ProductCard({ product }: { product: Product }) {
     }, []);
   
     useEffect(() => {
+      const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+      checkDesktop();
+      window.addEventListener("resize", checkDesktop);
+      return () => window.removeEventListener("resize", checkDesktop);
+    }, []);
+
+    useEffect(() => {
+      if (!isDesktop) return;
+
       const interval = setInterval(
         () => setActiveSlide((c) => (c + 1) % heroSlides.length),
         4000
       );
+
       return () => clearInterval(interval);
-    }, []);
+    }, [isDesktop]);
 
   const activeCategory = useMemo(
     () =>
@@ -438,13 +449,13 @@ function ProductCard({ product }: { product: Product }) {
       <CartDrawer />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
-        <div className="absolute bottom-20 right-0 h-[420px] w-[420px] rounded-full bg-[#00FF99]/5 blur-[140px]" />
+        <div className="absolute left-1/2 top-0 hidden h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px] md:block" />
+        <div className="absolute bottom-20 right-0 hidden h-[420px] w-[420px] rounded-full bg-[#00FF99]/5 blur-[140px] md:block" />
       </div>
 
       {/* ════════════ HEADER ════════════ */}
       <header
-        className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl"
+        className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
         style={{
           borderColor: "var(--border)",
           background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)",
@@ -623,7 +634,7 @@ function ProductCard({ product }: { product: Product }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] backdrop-blur-2xl xl:hidden"
+            className="fixed inset-0 z-[60] xl:hidden"
             style={{
               background: "color-mix(in srgb, var(--bg) 95%, transparent)",
             }}
@@ -704,28 +715,45 @@ function ProductCard({ product }: { product: Product }) {
               <Sparkles size={16} /> Оптовый цифровой прилавок электротранспорта
             </motion.div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeSlide}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.45 }}
+            <div className="lg:hidden">
+              <h1 className="text-4xl font-black leading-[1.05] tracking-tight">
+                Оптовые цены
+                <span className="mt-2 block text-[#00FF99]">
+                  электровелосипеды Aimiko
+                </span>
+              </h1>
+              <p
+                className="mt-6 max-w-xl text-lg leading-relaxed"
+                style={{ color: "var(--text-muted)" }}
               >
-                <h1 className="text-4xl font-black leading-[1.05] tracking-tight lg:text-6xl">
-                  {heroSlides[activeSlide].title}
-                  <span className="mt-2 block text-[#00FF99]">
-                    {heroSlides[activeSlide].accent}
-                  </span>
-                </h1>
-                <p
-                  className="mt-6 max-w-xl text-lg leading-relaxed"
-                  style={{ color: "var(--text-muted)" }}
+                Собственный бренд • прямые поставки • самовывоз в Москве
+              </p>
+            </div>
+
+            <div className="hidden lg:block">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeSlide}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.45 }}
                 >
-                  {heroSlides[activeSlide].text}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+                  <h1 className="text-4xl font-black leading-[1.05] tracking-tight lg:text-6xl">
+                    {heroSlides[activeSlide].title}
+                    <span className="mt-2 block text-[#00FF99]">
+                      {heroSlides[activeSlide].accent}
+                    </span>
+                  </h1>
+                  <p
+                    className="mt-6 max-w-xl text-lg leading-relaxed"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    {heroSlides[activeSlide].text}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
             <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
               <a
@@ -1161,7 +1189,7 @@ function ProductCard({ product }: { product: Product }) {
                 "linear-gradient(135deg, var(--accent-soft), var(--bg))",
             }}
           >
-            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px]" />
+            <div className="pointer-events-none absolute -right-20 -top-20 hidden h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px] md:block" />
             <div className="relative">
               <h2 className="max-w-3xl text-3xl font-black leading-[1.1] lg:text-5xl">
                 Готов выбрать свой{" "}
