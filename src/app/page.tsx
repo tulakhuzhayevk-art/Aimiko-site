@@ -789,14 +789,22 @@ function ProductCard({ product }: { product: Product }) {
                 className="aspect-[4/3] overflow-hidden"
                 style={{ background: "var(--bg-deeper)" }}
               >
-                <video
-                  src="/hero.mp4" preload="metadata" poster="/hero-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="h-full w-full object-cover"
-                />
+                <img
+  src="/hero-poster.jpg"
+  alt="Aimiko"
+  className="h-full w-full object-cover md:hidden"
+/>
+
+<video
+  src="/hero.mp4"
+  preload="metadata"
+  poster="/hero-poster.jpg"
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="hidden h-full w-full object-cover md:block"
+/>
               </div>
               <div
                 className="border-t p-7"
