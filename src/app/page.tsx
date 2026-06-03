@@ -28,7 +28,6 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
-import { Preloader } from "@/components/Preloader";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -354,6 +353,11 @@ function ProductCard({ product }: { product: Product }) {
    HomePage
    ═══════════════════════════════════════════════════════════════════════════════ */
    export default function HomePage() {
+    useEffect(() => {
+      const preventBfcache = () => {};
+      window.addEventListener("unload", preventBfcache);
+      return () => window.removeEventListener("unload", preventBfcache);
+    }, []);
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
     const [activeSlide, setActiveSlide] = useState(0);
@@ -437,7 +441,6 @@ function ProductCard({ product }: { product: Product }) {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       <CartDrawer />
-      <Preloader />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
