@@ -28,6 +28,7 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { Preloader } from "@/components/Preloader";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -233,14 +234,14 @@ function ProductCard({ product }: { product: Product }) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); e.preventDefault(); prevImage(); }}
-              className="absolute left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100 md:flex"
+              className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); e.preventDefault(); nextImage(); }}
-              className="absolute right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100 md:flex"
+              className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
             >
               <ChevronRight size={18} />
             </button>
@@ -263,11 +264,11 @@ function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Card body */}
-      <div className="flex flex-1 flex-col p-3 md:p-6">
+      <div className="flex flex-1 flex-col p-6">
         <p className="text-sm" style={{ color: "var(--text-faint)" }}>
           {product.category}
         </p>
-        <h4 className="mt-1 text-base font-semibold md:text-xl">{product.name}</h4>
+        <h4 className="mt-1 text-xl font-semibold">{product.name}</h4>
         <p
                     className="mt-3 line-clamp-2 text-sm leading-relaxed"
           style={{ color: "var(--text-muted)" }}
@@ -275,7 +276,7 @@ function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
 
-        <div className="mt-4 hidden grid-cols-2 gap-2 md:grid">
+        <div className="mt-5 grid grid-cols-2 gap-2">
           {product.shortSpecs.map((spec) => (
             <div
               key={spec}
@@ -407,7 +408,7 @@ function ProductCard({ product }: { product: Product }) {
     setSearchQuery("");
     setActiveCategoryId(id);
     requestAnimationFrame(() =>
-      document.getElementById("catalog")?.scrollIntoView({ behavior: "auto" })
+      document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })
     );
   };
 
@@ -435,15 +436,16 @@ function ProductCard({ product }: { product: Product }) {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       <CartDrawer />
+      <Preloader />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute left-1/2 top-0 hidden h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px] md:block" />
+        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
         <div className="absolute bottom-20 right-0 h-[420px] w-[420px] rounded-full bg-[#00FF99]/5 blur-[140px]" />
       </div>
 
       {/* ════════════ HEADER ════════════ */}
       <header
-        className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
+        className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl"
         style={{
           borderColor: "var(--border)",
           background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)",
@@ -509,7 +511,7 @@ function ProductCard({ product }: { product: Product }) {
             {/* Search dropdown */}
             {searchQuery && (
               <div
-                className="fixed left-4 right-4 top-24 max-h-[60vh] md:absolute md:left-0 md:right-auto md:top-14 md:max-h-[70vh] md:w-full md:max-w-[calc(100vw-2rem)] overflow-y-auto rounded-2xl border p-4 shadow-2xl shadow-[#00FF99]/10"
+                className="absolute left-0 top-14 max-h-[70vh] w-full overflow-y-auto rounded-2xl border p-4 shadow-2xl shadow-[#00FF99]/10"
                 style={{
                   borderColor: "var(--border)",
                   background: "var(--bg-elevated)",
@@ -526,7 +528,7 @@ function ProductCard({ product }: { product: Product }) {
                           requestAnimationFrame(() =>
                             document
                               .getElementById("catalog")
-                              ?.scrollIntoView({ behavior: "auto" })
+                              ?.scrollIntoView({ behavior: "smooth" })
                           );
                         }}
                         className="flex w-full items-center gap-3 rounded-xl border p-3 text-left transition hover:border-[#00FF99]/30"
@@ -548,8 +550,8 @@ function ProductCard({ product }: { product: Product }) {
                             }}
                           />
                         </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="line-clamp-2 text-sm font-medium">{product.name}</p>
+                        <div className="flex-1">
+                          <p className="font-medium">{product.name}</p>
                           <p
                             className="text-sm"
                             style={{ color: "var(--text-faint)" }}
@@ -622,7 +624,7 @@ function ProductCard({ product }: { product: Product }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] md:backdrop-blur-2xl xl:hidden"
+            className="fixed inset-0 z-[60] backdrop-blur-2xl xl:hidden"
             style={{
               background: "color-mix(in srgb, var(--bg) 95%, transparent)",
             }}
@@ -695,7 +697,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ HERO ════════════ */}
       <section id="top" className="relative px-5 pb-24 pt-32 lg:pt-40">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-          <motion.div initial={false}  variants={stagger}>
+          <motion.div initial="hidden" animate="visible" variants={stagger}>
             <motion.div
               variants={fadeUp}
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#00FF99]/30 bg-[#00FF99]/10 px-4 py-2 text-sm text-[#00FF99]"
@@ -772,12 +774,12 @@ function ProductCard({ product }: { product: Product }) {
 
           {/* Hero video card */}
           <motion.div
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, scale: 0.92, y: 45 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
             className="relative"
           >
-            <div className="absolute -inset-10 hidden bg-[#00FF99]/20 blur-[120px] md:block" />
+            <div className="absolute -inset-10 bg-[#00FF99]/20 blur-[120px]" />
             <div
               className="relative overflow-hidden rounded-[32px] border shadow-2xl shadow-black"
               style={{
@@ -789,22 +791,14 @@ function ProductCard({ product }: { product: Product }) {
                 className="aspect-[4/3] overflow-hidden"
                 style={{ background: "var(--bg-deeper)" }}
               >
-                <img
-  src="/hero-poster.jpg"
-  alt="Aimiko"
-  className="h-full w-full object-cover md:hidden"
-/>
-
-<video
-  src="/hero.mp4"
-  preload="metadata"
-  poster="/hero-poster.jpg"
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="hidden h-full w-full object-cover md:block"
-/>
+                <video
+                  src="/hero.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="h-full w-full object-cover"
+                />
               </div>
               <div
                 className="border-t p-7"
@@ -841,8 +835,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ ADVANTAGES ════════════ */}
       <motion.section
         id="advantages"
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={stagger}
         className="px-5 pb-24"
@@ -887,8 +881,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ CATEGORIES ════════════ */}
       <motion.section
         id="categories"
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -932,8 +926,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ CATALOG ════════════ */}
       <motion.section
         id="catalog"
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -962,10 +956,10 @@ function ProductCard({ product }: { product: Product }) {
           {filteredProducts.length > 0 ? (
             <motion.div
               key={activeCategoryId || searchQuery || "main"}
-              initial={false}
-              
+              initial="hidden"
+              animate="visible"
               variants={stagger}
-              className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3"
+              className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
             >
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
@@ -990,8 +984,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ REVIEWS ════════════ */}
       <motion.section
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1046,8 +1040,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ ABOUT ════════════ */}
       <motion.section
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1105,8 +1099,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ DELIVERY ════════════ */}
       <motion.section
         id="delivery"
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1152,8 +1146,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ CTA ════════════ */}
       <motion.section
-        initial={false}
-        
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1167,7 +1161,7 @@ function ProductCard({ product }: { product: Product }) {
                 "linear-gradient(135deg, var(--accent-soft), var(--bg))",
             }}
           >
-            <div className="pointer-events-none absolute -right-20 -top-20 hidden h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px] md:block" />
+            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px]" />
             <div className="relative">
               <h2 className="max-w-3xl text-3xl font-black leading-[1.1] lg:text-5xl">
                 Готов выбрать свой{" "}
