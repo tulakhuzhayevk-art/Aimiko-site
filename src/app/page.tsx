@@ -695,7 +695,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ HERO ════════════ */}
       <section id="top" className="relative px-5 pb-24 pt-32 lg:pt-40">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-          <motion.div initial="hidden" animate="visible" variants={stagger}>
+          <motion.div initial={false}  variants={stagger}>
             <motion.div
               variants={fadeUp}
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#00FF99]/30 bg-[#00FF99]/10 px-4 py-2 text-sm text-[#00FF99]"
@@ -841,8 +841,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ ADVANTAGES ════════════ */}
       <motion.section
         id="advantages"
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true, margin: "-100px" }}
         variants={stagger}
         className="px-5 pb-24"
@@ -887,8 +887,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ CATEGORIES ════════════ */}
       <motion.section
         id="categories"
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -932,8 +932,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ CATALOG ════════════ */}
       <motion.section
         id="catalog"
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -962,8 +962,8 @@ function ProductCard({ product }: { product: Product }) {
           {filteredProducts.length > 0 ? (
             <motion.div
               key={activeCategoryId || searchQuery || "main"}
-              initial="hidden"
-              animate="visible"
+              initial={false}
+              
               variants={stagger}
               className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3"
             >
@@ -990,8 +990,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ REVIEWS ════════════ */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1046,8 +1046,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ ABOUT ════════════ */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1105,8 +1105,8 @@ function ProductCard({ product }: { product: Product }) {
       {/* ════════════ DELIVERY ════════════ */}
       <motion.section
         id="delivery"
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
@@ -1152,8 +1152,8 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* ════════════ CTA ════════════ */}
       <motion.section
-        initial="hidden"
-        whileInView="visible"
+        initial={false}
+        
         viewport={{ once: true }}
         variants={stagger}
         className="px-5 pb-24"
