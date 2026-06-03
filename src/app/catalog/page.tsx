@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
 import { BackButton } from "@/components/BackButton";
@@ -94,7 +94,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
   }
 
   return (
-    <motion.div variants={fadeUp} whileHover={{ y: -6 }}>
+    <motion.div variants={fadeUp}>
       <Link href={`/catalog/${product.id}`} className="group flex flex-col overflow-hidden rounded-2xl border transition hover:border-[#00FF99]/40" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
         <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "var(--bg-deeper)" }}>
           <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
@@ -130,6 +130,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
 function CatalogContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState("popular");
@@ -139,9 +140,17 @@ function CatalogContent() {
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { totalItems, openCart } = useCart();
   const [allProducts, setAllProducts] = useState<Product[]>(localProducts);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -168,7 +177,7 @@ function CatalogContent() {
 
   const filteredProducts = useMemo<Product[]>(() => {
     let result = [...allProducts];
-    const query = searchQuery.trim().toLowerCase();
+    const query = deferredSearchQuery.trim().toLowerCase();
     if (query) {
       result = result.filter((p) => {
         const specsText = (p.specs || []).map((s) => `${s.label} ${s.value}`).join(" ");
@@ -190,7 +199,7 @@ function CatalogContent() {
       default: result.sort((a, b) => (b.isPopular ? 1 : 0) - (a.isPopular ? 1 : 0));
     }
     return result;
-  }, [searchQuery, activeCategoryId, activeSubcategoryId, sortBy, statusFilter, allProducts]);
+  }, [deferredSearchQuery, activeCategoryId, activeSubcategoryId, sortBy, statusFilter, allProducts]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE);
@@ -397,7 +406,13 @@ function CatalogContent() {
                 ))}
               </div>
             ) : paginatedProducts.length > 0 ? (
-              <motion.div key={`${activeCategoryId}-${sortBy}-${currentPage}-${view}`} initial="hidden" animate="visible" variants={stagger} className={view === "grid" ? "grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3" : "space-y-4"}>
+              <motion.div
+                key={`${activeCategoryId}-${sortBy}-${currentPage}-${view}`}
+                initial={isMobile ? false : "hidden"}
+                animate={isMobile ? false : "visible"}
+                variants={isMobile ? undefined : stagger}
+                className={view === "grid" ? "grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3" : "space-y-4"}
+              >
                 {paginatedProducts.map((product) => <CatalogProductCard key={product.id} product={product} view={view} />)}
               </motion.div>
             ) : (

@@ -234,14 +234,14 @@ function ProductCard({ product }: { product: Product }) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); e.preventDefault(); prevImage(); }}
-              className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
+              className="absolute left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100 md:flex"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); e.preventDefault(); nextImage(); }}
-              className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100"
+              className="absolute right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 opacity-0 backdrop-blur-md transition hover:bg-[#00FF99] hover:text-black group-hover:opacity-100 md:flex"
             >
               <ChevronRight size={18} />
             </button>
@@ -264,11 +264,11 @@ function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Card body */}
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-3 md:p-6">
         <p className="text-sm" style={{ color: "var(--text-faint)" }}>
           {product.category}
         </p>
-        <h4 className="mt-1 text-xl font-semibold">{product.name}</h4>
+        <h4 className="mt-1 text-base font-semibold md:text-xl">{product.name}</h4>
         <p
                     className="mt-3 line-clamp-2 text-sm leading-relaxed"
           style={{ color: "var(--text-muted)" }}
@@ -276,7 +276,7 @@ function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-2">
+        <div className="mt-4 hidden grid-cols-2 gap-2 md:grid">
           {product.shortSpecs.map((spec) => (
             <div
               key={spec}
@@ -959,7 +959,7 @@ function ProductCard({ product }: { product: Product }) {
               initial="hidden"
               animate="visible"
               variants={stagger}
-              className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+              className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-3"
             >
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
