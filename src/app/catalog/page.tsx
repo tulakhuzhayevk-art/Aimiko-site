@@ -24,6 +24,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
 import { BackButton } from "@/components/BackButton";
+import { CategoryTabs } from "@/components/CategoryTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories, subcategories } from "@/data/categories";
 import { type Product } from "@/data/products";
@@ -195,7 +196,7 @@ function CatalogContent() {
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE);
   const activeCategory = activeCategoryId ? categories.find((c) => c.id === activeCategoryId) : null;
   const clearAllFilters = () => { setSearchQuery(""); setActiveCategoryId(null); setActiveSubcategoryId(null); setStatusFilter(null); setSortBy("popular"); };
-  const hasActiveFilters = !!activeCategoryId || !!activeSubcategoryId || !!statusFilter;
+  const hasActiveFilters = !!activeSubcategoryId || !!statusFilter;
 
   const filtersContent = (
     <div className="space-y-6">
@@ -329,6 +330,7 @@ function CatalogContent() {
           </p>
         </div>
 
+        <CategoryTabs categories={categories} activeId={activeCategoryId} onChange={setActiveCategoryId} />
         <div className="flex gap-6">
           <aside className="hidden w-[260px] shrink-0 lg:block">
             <div className="sticky top-24 rounded-2xl border p-5" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
@@ -354,14 +356,6 @@ function CatalogContent() {
 
             {hasActiveFilters && (
               <div className="mb-4 flex flex-wrap gap-2">
-                {activeCategoryId && (
-                  <button
-                    onClick={() => setActiveCategoryId(null)}
-                    className="flex items-center gap-1 rounded-full border border-[#00FF99]/30 bg-[#00FF99]/10 px-3 py-1 text-xs font-semibold text-[#00FF99]"
-                  >
-                    {activeCategory?.title} <X size={12} />
-                  </button>
-                )}
                 {activeSubcategoryId && (
                   <button
                     onClick={() => setActiveSubcategoryId(null)}
