@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getServices, type Service } from "@/sanity/queries";
 import { useCart } from "@/lib/cart-context";
@@ -60,6 +61,7 @@ export default function ServicesPage() {
       </header>
 
       <div className="mx-auto max-w-[1400px] px-5 pt-24 pb-16">
+        <BackButton />
         <div className="mb-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
           <Link href="/" className="transition hover:text-[#00FF99]">Главная</Link>
           <ChevronRight size={14} />

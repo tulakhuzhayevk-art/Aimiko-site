@@ -17,6 +17,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getService, type Service } from "@/sanity/queries";
 import { useCart } from "@/lib/cart-context";
@@ -81,8 +82,9 @@ export default function ServicePage() {
       </header>
 
       <div className="mx-auto max-w-[1400px] px-5 pt-24 pb-16">
+        <BackButton />
         {/* Назад к услугам */}
-        <Link href="/services" className="mb-6 inline-flex items-center gap-1 text-sm transition hover:text-[#00FF99]" style={{ color: "var(--text-muted)" }}>
+        <Link href="/services" className="mb-6 hidden md:inline-flex items-center gap-1 text-sm transition hover:text-[#00FF99]" style={{ color: "var(--text-muted)" }}>
           <ChevronLeft size={16} /> Все услуги
         </Link>
 

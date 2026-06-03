@@ -20,6 +20,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories } from "@/data/categories";
 import { products as localProducts } from "@/data/products";
@@ -112,6 +113,7 @@ export default function ProductPage() {
       </header>
 
       <div className="mx-auto max-w-[1200px] px-5 pb-16 pt-24">
+        <BackButton />
         <div className="mb-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
           <Link href="/" className="transition hover:text-[#00FF99]">Главная</Link>
           <ChevronRight size={14} />

@@ -23,6 +23,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories, subcategories } from "@/data/categories";
 import { type Product } from "@/data/products";
@@ -307,6 +308,7 @@ function CatalogContent() {
       </header>
 
       <div className="mx-auto max-w-[1400px] px-5 pt-24 pb-16">
+        <BackButton />
         <div className="mb-6">
           <div className="flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
             <Link href="/" className="transition hover:text-[#00FF99]">Главная</Link>
