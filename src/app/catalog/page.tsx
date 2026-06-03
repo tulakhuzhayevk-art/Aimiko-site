@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
 import { BackButton } from "@/components/BackButton";
@@ -130,7 +130,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
 function CatalogContent() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
-  const deferredSearchQuery = useDeferredValue(searchQuery);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState("popular");
@@ -151,6 +151,14 @@ function CatalogContent() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 400);
+
+    return () => window.clearTimeout(timer);
+  }, [searchQuery]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -177,7 +185,7 @@ function CatalogContent() {
 
   const filteredProducts = useMemo<Product[]>(() => {
     let result = [...allProducts];
-    const query = deferredSearchQuery.trim().toLowerCase();
+    const query = debouncedSearchQuery.trim().toLowerCase();
     if (query) {
       result = result.filter((p) => {
         const specsText = (p.specs || []).map((s) => `${s.label} ${s.value}`).join(" ");
@@ -199,7 +207,7 @@ function CatalogContent() {
       default: result.sort((a, b) => (b.isPopular ? 1 : 0) - (a.isPopular ? 1 : 0));
     }
     return result;
-  }, [deferredSearchQuery, activeCategoryId, activeSubcategoryId, sortBy, statusFilter, allProducts]);
+  }, [debouncedSearchQuery, activeCategoryId, activeSubcategoryId, sortBy, statusFilter, allProducts]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   const paginatedProducts = filteredProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE);

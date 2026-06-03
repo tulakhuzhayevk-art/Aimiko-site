@@ -28,7 +28,7 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
-import { Preloader } from "@/components/Preloader";
+import { PreloaderGate } from "@/components/PreloaderGate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -408,7 +408,7 @@ function ProductCard({ product }: { product: Product }) {
     setSearchQuery("");
     setActiveCategoryId(id);
     requestAnimationFrame(() =>
-      document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })
+      document.getElementById("catalog")?.scrollIntoView({ behavior: "auto" })
     );
   };
 
@@ -436,7 +436,7 @@ function ProductCard({ product }: { product: Product }) {
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
       <CartDrawer />
-      <Preloader />
+      <PreloaderGate />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
@@ -528,7 +528,7 @@ function ProductCard({ product }: { product: Product }) {
                           requestAnimationFrame(() =>
                             document
                               .getElementById("catalog")
-                              ?.scrollIntoView({ behavior: "smooth" })
+                              ?.scrollIntoView({ behavior: "auto" })
                           );
                         }}
                         className="flex w-full items-center gap-3 rounded-xl border p-3 text-left transition hover:border-[#00FF99]/30"
