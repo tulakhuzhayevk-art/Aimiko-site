@@ -360,6 +360,7 @@ function ProductCard({ product }: { product: Product }) {
     const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
+    const [heroVideoKey, setHeroVideoKey] = useState(0);
     const { totalItems, openCart } = useCart();
   
     useEffect(() => {
@@ -792,6 +793,7 @@ function ProductCard({ product }: { product: Product }) {
                 style={{ background: "var(--bg-deeper)" }}
               >
                 <video
+                  key={heroVideoKey}
                   src="/hero.mp4"
                   autoPlay
                   muted
