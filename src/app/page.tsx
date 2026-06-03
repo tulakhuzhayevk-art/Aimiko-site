@@ -692,8 +692,64 @@ function ProductCard({ product }: { product: Product }) {
         )}
       </AnimatePresence>
 
+      {/* ════════════ MOBILE HERO SAFE ════════════ */}
+      <section id="top-mobile" className="px-5 pb-14 pt-28 lg:hidden">
+        <div className="mx-auto max-w-md">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00FF99]/30 bg-[#00FF99]/10 px-4 py-2 text-xs font-semibold text-[#00FF99]">
+            Оптовый цифровой прилавок электротранспорта
+          </div>
+
+          <h1 className="text-4xl font-black leading-[1.05] tracking-tight">
+            Электротранспорт
+            <span className="mt-2 block text-[#00FF99]">
+              для бизнеса
+            </span>
+          </h1>
+
+          <p className="mt-5 text-base lead оформлением заявки.
+          </p>
+
+          <div className="mt-7 grid grid-cols-2 gap-3">
+            <a
+              href="/catalog"
+              className="flex h-12 items-center justify-center rounded-2xl bg-[#00FF99] text-sm font-bold text-black"
+            >
+              Каталог
+            </a>
+            <a
+              href="https://wa.me/79895772177"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 items-center justify-center rounded-2xl border text-sm font-semibold"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              WhatsApp
+            </a>
+          </div>
+
+          <div className="mt-7 overflow-hidden rounded-[28px] border shadow-xl shadow-black/10" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
+            <img
+              src="/hero-poster.jpg"
+              alt="Aimiko"
+              className="aspect-[4/3] w-fu     />
+            <div className="border-t p-5" style={{ borderColor: "var(--border)" }}>
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs" style={{ color: "var(--text-faint)" }}>Хит продаж</p>
+                  <h3 className="mt-1 text-lg font-bold">Aimiko M1 Pro</h3>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs" style={{ color: "var(--text-faint)" }}>от</p>
+                  <p className="text-xl font-black text-[#00FF99]">52 000 ₽</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ════════════ HERO ════════════ */}
-      <section id="top" className="relative px-5 pb-24 pt-32 lg:pt-40">
+      <section id="top" className="relative hidden px-5 pb-24 pt-32 lg:block lg:pt-40">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
           <motion.div initial={false}  variants={stagger}>
             <motion.div
