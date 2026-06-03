@@ -437,7 +437,7 @@ function ProductCard({ product }: { product: Product }) {
       <CartDrawer />
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 hidden h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#00FF99]/10 blur-[120px] md:block" />
         <div className="absolute bottom-20 right-0 h-[420px] w-[420px] rounded-full bg-[#00FF99]/5 blur-[140px]" />
       </div>
 
@@ -772,12 +772,12 @@ function ProductCard({ product }: { product: Product }) {
 
           {/* Hero video card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 45 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
             className="relative"
           >
-            <div className="absolute -inset-10 bg-[#00FF99]/20 blur-[120px]" />
+            <div className="absolute -inset-10 hidden bg-[#00FF99]/20 blur-[120px] md:block" />
             <div
               className="relative overflow-hidden rounded-[32px] border shadow-2xl shadow-black"
               style={{
@@ -1159,7 +1159,7 @@ function ProductCard({ product }: { product: Product }) {
                 "linear-gradient(135deg, var(--accent-soft), var(--bg))",
             }}
           >
-            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px]" />
+            <div className="pointer-events-none absolute -right-20 -top-20 hidden h-80 w-80 rounded-full bg-[#00FF99]/30 blur-[120px] md:block" />
             <div className="relative">
               <h2 className="max-w-3xl text-3xl font-black leading-[1.1] lg:text-5xl">
                 Готов выбрать свой{" "}
