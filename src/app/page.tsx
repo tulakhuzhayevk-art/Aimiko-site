@@ -28,7 +28,6 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
-import { MobileHeroCard } from "@/components/MobileHeroCard";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -522,7 +521,7 @@ function ProductCard({ product }: { product: Product }) {
             {/* Search dropdown */}
             {searchQuery && (
               <div
-                className="fixed left-4 right-4 top-24 max-h-[60vh] md:absolute md:left-0 md:right-auto md:top-14 md:max-h-[70vh] md:w-full md:max-w-[calc(100vw-2rem)] overflow-y-auto rounded-2xl border p-4 shadow-2xl shadow-[#00FF99]/10"
+                className="absolute left-0 top-14 max-h-[70vh] w-full overflow-y-auto rounded-2xl border p-4 shadow-2xl shadow-[#00FF99]/10"
                 style={{
                   borderColor: "var(--border)",
                   background: "var(--bg-elevated)",
@@ -561,8 +560,8 @@ function ProductCard({ product }: { product: Product }) {
                             }}
                           />
                         </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="line-clamp-2 text-sm font-medium">{product.name}</p>
+                        <div className="flex-1">
+                          <p className="font-medium">{product.name}</p>
                           <p
                             className="text-sm"
                             style={{ color: "var(--text-faint)" }}
@@ -729,7 +728,6 @@ function ProductCard({ product }: { product: Product }) {
               >
                 Собственный бренд • прямые поставки • самовывоз в Москве
               </p>
-              <MobileHeroCard />
             </div>
 
             <div className="hidden lg:block">
@@ -985,7 +983,7 @@ function ProductCard({ product }: { product: Product }) {
 
           {filteredProducts.length > 0 ? (
             <motion.div
-              key={activeCategoryId || "main"}
+              key={activeCategoryId || searchQuery || "main"}
               initial="hidden"
               animate="visible"
               variants={stagger}
