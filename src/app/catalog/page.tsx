@@ -172,6 +172,7 @@ function CatalogContent() {
   }, []);
 
   useEffect(() => { setCurrentPage(1); }, [searchQuery, activeCategoryId, activeSubcategoryId, sortBy, statusFilter]);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [currentPage]);
 
   // При смене категории сбрасываем подкатегорию (чтобы не остался "осиротевший" фильтр)
   useEffect(() => { setActiveSubcategoryId(null); }, [activeCategoryId]);
