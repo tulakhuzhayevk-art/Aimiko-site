@@ -28,6 +28,7 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
+import { MobileHeroCard } from "@/components/MobileHeroCard";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -728,6 +729,7 @@ function ProductCard({ product }: { product: Product }) {
               >
                 Собственный бренд • прямые поставки • самовывоз в Москве
               </p>
+              <MobileHeroCard />
             </div>
 
             <div className="hidden lg:block">
