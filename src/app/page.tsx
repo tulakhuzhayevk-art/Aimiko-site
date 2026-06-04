@@ -25,7 +25,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { Suspense, useDeferredValue, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { CartDrawer } from "@/components/CartDrawer";
 import { MobileHeroCard } from "@/components/MobileHeroCard";
@@ -356,7 +356,6 @@ function ProductCard({ product }: { product: Product }) {
    export default function HomePage() {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
-    const deferredSearchQuery = useDeferredValue(searchQuery);
     const [activeSlide, setActiveSlide] = useState(0);
     const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -398,7 +397,7 @@ function ProductCard({ product }: { product: Product }) {
   );
 
   const filteredProducts = useMemo<Product[]>(() => {
-    const query = deferredSearchQuery.trim().toLowerCase();
+    const query = searchQuery.trim().toLowerCase();
     if (query) {
       return products.filter((p) => {
         const specsText = (p.specs || [])
@@ -415,7 +414,7 @@ function ProductCard({ product }: { product: Product }) {
       return products.filter((p) => p.categoryId === activeCategoryId);
     }
     return products.filter((p) => p.isPopular === true).slice(0, 3);
-  }, [deferredSearchQuery, activeCategoryId, products]);
+  }, [searchQuery, activeCategoryId, products]);
 
   const handleSelectCategory = (id: string) => {
     setSearchQuery("");
