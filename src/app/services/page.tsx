@@ -1,10 +1,12 @@
 "use client";
 
 import { Check, ChevronRight, Clock, MapPin, MessageCircle, Phone, Send, Shield, ShoppingCart, Sparkles, Wrench } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { CartDrawer } from "@/components/CartDrawer";
+import dynamic from "next/dynamic";
+const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getServices, type Service } from "@/sanity/queries";
@@ -29,11 +31,11 @@ export default function ServicesPage() {
 
       <header
         className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
-        style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}
+        style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)", paddingTop: "env(safe-area-inset-top)" }}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" />
+            <Image src="/logo.png" alt="Aimiko" width={120} height={36} className="h-9 w-auto object-contain" priority />
           </Link>
           <nav className="hidden items-center gap-6 text-sm md:flex" style={{ color: "var(--text-muted)" }}>
             <Link href="/catalog" className="transition hover:text-[#00FF99]">Каталог</Link>
@@ -105,7 +107,7 @@ export default function ServicesPage() {
               >
                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl" style={{ background: "var(--bg-deeper)" }}>
                   {service.images[0] ? (
-                    <img src={service.images[0]} alt={service.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={service.images[0]} alt={service.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
                       <Shield size={48} style={{ color: "var(--text-faint)" }} />

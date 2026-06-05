@@ -12,11 +12,13 @@ import {
   ShoppingCart,
   Wrench,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { CartDrawer } from "@/components/CartDrawer";
+import dynamic from "next/dynamic";
+const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getService, type Service } from "@/sanity/queries";
@@ -50,11 +52,11 @@ export default function ServicePage() {
       {/* Header */}
       <header
         className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
-        style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}
+        style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)", paddingTop: "env(safe-area-inset-top)" }}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" />
+            <Image src="/logo.png" alt="Aimiko" width={120} height={36} className="h-9 w-auto object-contain" priority />
           </Link>
           <nav className="hidden items-center gap-6 text-sm md:flex" style={{ color: "var(--text-muted)" }}>
             <Link href="/catalog" className="transition hover:text-[#00FF99]">Каталог</Link>
@@ -95,7 +97,7 @@ export default function ServicePage() {
             {/* Фото слева */}
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border" style={{ borderColor: "var(--border)", background: "var(--bg-deeper)" }}>
               {service.images[0] ? (
-                <img src={service.images[0]} alt={service.name} className="h-full w-full object-cover" />
+                <Image src={service.images[0]} alt={service.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" priority />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">
                   <Wrench size={64} style={{ color: "var(--text-faint)" }} />

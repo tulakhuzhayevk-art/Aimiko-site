@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import type { Product } from "@/data/products";
+import { toast } from "sonner";
 
 export type CartItem = {
   product: Product;
@@ -106,7 +107,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { product, quantity: qty }];
     });
-    setIsOpen(true);
+    toast.success(`${product.name} в корзине`, {
+      duration: 2500,
+      action: {
+        label: "Открыть",
+        onClick: () => setIsOpen(true),
+      },
+    });
   };
 
   const removeItem = (productId: string) => {

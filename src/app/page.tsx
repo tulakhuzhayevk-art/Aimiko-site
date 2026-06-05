@@ -27,8 +27,10 @@ import {
 } from "lucide-react";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
-import { CartDrawer } from "@/components/CartDrawer";
+import dynamic from "next/dynamic";
+const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { MobileHeroCard } from "@/components/MobileHeroCard";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -188,19 +190,16 @@ function ProductCard({ product }: { product: Product }) {
         style={{ background: "var(--bg-deeper)" }}
       >
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.div
             key={product.images[imageIndex]}
-            src={product.images[imageIndex]}
-            alt={product.name}
             initial={{ opacity: 0, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
+            className="absolute inset-0"
+          >
+            <Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition duration-500 group-hover:scale-105" priority />
+          </motion.div>
         </AnimatePresence>
 
         {/* Badges */}
@@ -459,20 +458,20 @@ function ProductCard({ product }: { product: Product }) {
         className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl"
         style={{
           borderColor: "var(--border)",
-          background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)",
+          background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)", paddingTop: "env(safe-area-inset-top)",
         }}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5">
           {/* Logo + Nav */}
           <div className="flex items-center gap-10">
             <a href="#top" className="flex items-center gap-2">
-              <img
+              <Image
                 src="/logo.png"
                 alt="Aimiko"
+                width={120}
+                height={40}
                 className="h-10 w-auto object-contain"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
+                priority
               />
           
             </a>
@@ -552,13 +551,12 @@ function ProductCard({ product }: { product: Product }) {
                           className="h-12 w-12 shrink-0 overflow-hidden rounded-lg"
                           style={{ background: "var(--bg-deeper)" }}
                         >
-                          <img
+                          <Image
                             src={product.images[0]}
                             alt=""
+                            width={48}
+                            height={48}
                             className="h-full w-full object-cover"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
                           />
                         </div>
                         <div className="min-w-0 flex-1">

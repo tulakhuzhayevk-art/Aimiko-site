@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
@@ -14,10 +15,13 @@ export function MobileHeroCard() {
       }}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        <img
+        <Image
           src="/hero-poster.jpg"
           alt="Aimiko M1 Pro"
-          className="h-full w-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 600px"
+          className="object-cover"
+          priority
         />
         <div
           className="absolute inset-0"

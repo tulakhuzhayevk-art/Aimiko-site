@@ -15,11 +15,13 @@ import {
   ShoppingCart,
   Truck,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { CartDrawer } from "@/components/CartDrawer";
+import dynamic from "next/dynamic";
+const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { BackButton } from "@/components/BackButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categories } from "@/data/categories";
@@ -40,6 +42,7 @@ export default function ProductPage() {
 
   const { addItem, isInCart, totalItems, openCart } = useCart();
   const [imageIndex, setImageIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<"description" | "specs">("specs");
 
@@ -86,6 +89,16 @@ export default function ProductPage() {
   const category = categories.find((c) => c.id === product.categoryId);
   const nextImage = () => setImageIndex((c) => (c + 1) % product.images.length);
   const prevImage = () => setImageIndex((c) => (c - 1 + product.images.length) % product.images.length);
+  const handleTouchStart = (e: React.TouchEvent) => setTouchStartX(e.touches[0].clientX);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const delta = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) {
+      if (delta > 0) nextImage();
+      else prevImage();
+    }
+    setTouchStartX(null);
+  };
   const handleAddToCart = () => { addItem(product, qty); setQty(1); };
   const whatsappLink = `https://wa.me/79882564919?text=${encodeURIComponent(`Здравствуйте! Интересует оптовая цена на ${product.name}.`)}`;
   const shareLink = () => { if (typeof window === "undefined") return; if (navigator.share) { navigator.share({ title: product.name, url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); } };
@@ -94,11 +107,11 @@ export default function ProductPage() {
     <div className="min-h-screen" style={{ background: "var(--bg)", color: "var(--text)" }}>
       <CartDrawer />
 
-      <header className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}>
+      <header className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)", paddingTop: "env(safe-area-inset-top)" }}>
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-5">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+              <Image src="/logo.png" alt="Aimiko" width={120} height={36} className="h-9 w-auto object-contain" priority />
             </Link>
             <Link href="/catalog" className="hidden text-sm transition hover:text-[#00FF99] md:block" style={{ color: "var(--text-muted)" }}>← Каталог</Link>
           </div>
@@ -126,9 +139,9 @@ export default function ProductPage() {
         <motion.div initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }} className="grid gap-8 lg:grid-cols-2">
           {/* Gallery */}
           <motion.div variants={fadeUp}>
-            <div className="relative aspect-square overflow-hidden rounded-3xl" style={{ background: "var(--bg-deeper)" }}>
+            <div className="relative aspect-square overflow-hidden rounded-3xl" style={{ background: "var(--bg-deeper)" }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
               <AnimatePresence mode="wait">
-                <motion.img key={product.images[imageIndex]} src={product.images[imageIndex]} alt={product.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                <motion.div key={product.images[imageIndex]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="absolute inset-0"><Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover" priority /></motion.div>
               </AnimatePresence>
               <div className="absolute left-4 top-4 flex flex-col gap-1.5">
                 {product.oldPrice && <span className="rounded-full bg-[#00FF99] px-3 py-1 text-xs font-bold text-black">Скидка</span>}
@@ -145,7 +158,7 @@ export default function ProductPage() {
               <div className="mt-4 flex gap-3">
                 {product.images.map((img: string, idx: number) => (
                   <button key={img} onClick={() => setImageIndex(idx)} className={`h-20 w-20 overflow-hidden rounded-xl border-2 transition ${imageIndex === idx ? "border-[#00FF99]" : "border-transparent opacity-50 hover:opacity-100"}`} style={{ background: "var(--bg-deeper)" }}>
-                    <img src={img} alt="" className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <Image src={img} alt="" width={80} height={80} className="h-full w-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -248,8 +261,8 @@ export default function ProductPage() {
                 return (
                   <div key={p.id} className="group overflow-hidden rounded-2xl border transition hover:border-[#00FF99]/40" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
                     <Link href={`/catalog/${p.id}`}>
-                      <div className="aspect-[4/3] overflow-hidden" style={{ background: "var(--bg-deeper)" }}>
-                        <img src={p.images[0]} alt={p.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "var(--bg-deeper)" }}>
+                        <Image src={p.images[0]} alt={p.name} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
                       </div>
                     </Link>
                     <div className="p-4">
@@ -307,6 +320,41 @@ export default function ProductPage() {
           </div>
         </div>
       </footer>
+      {/* Sticky CTA для мобилки */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-40 border-t md:hidden"
+        style={{
+          background: "var(--bg-elevated)",
+          borderColor: "var(--border)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        <div className="flex items-center gap-3 p-4">
+          <div className="flex-1">
+            <p className="text-2xl font-black text-[#00FF99]">{product.price.toLocaleString()} ₽</p>
+            {product.oldPrice && (
+              <p className="text-xs line-through" style={{ color: "var(--text-faint)" }}>{product.oldPrice.toLocaleString()} ₽</p>
+            )}
+          </div>
+          {inCart ? (
+            <button
+              onClick={openCart}
+              className="flex h-12 flex-[1.2] items-center justifyrounded-2xl border border-[#00FF99]/30 bg-[#00FF99]/10 font-semibold text-[#00FF99] transition active:scale-95"
+            >
+              <ShoppingCart size={18} /> В корзине
+            </button>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="flex h-12 flex-[1.2] items-center justify-center gap-2 rounded-2xl bg-[#00FF99] font-semibold text-black transition active:scale-95"
+            >
+              <ShoppingCart size={18} /> В корзину
+            </button>
+          )}
+        </div>
+      </div>
+      {/* Spacer чтобы sticky CTA не закрывал контент */}
+      <div className="h-24 md:hidden" />
     </div>
   );
 }

@@ -18,11 +18,13 @@ import {
   SlidersHorizontal,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
-import { CartDrawer } from "@/components/CartDrawer";
+import dynamic from "next/dynamic";
+const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { BackButton } from "@/components/BackButton";
 import { CategoryTabs } from "@/components/CategoryTabs";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -62,7 +64,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
       <motion.div variants={fadeUp}>
         <Link href={`/catalog/${product.id}`} className="flex gap-5 rounded-2xl border p-4 transition hover:border-[#00FF99]/40" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
           <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl" style={{ background: "var(--bg-deeper)" }}>
-            <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            <Image src={product.images[0]} alt={product.name} width={128} height={128} className="h-full w-full object-cover" />
           </div>
           <div className="flex flex-1 flex-col justify-between">
             <div>
@@ -97,7 +99,7 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
     <motion.div variants={fadeUp}>
       <Link href={`/catalog/${product.id}`} className="group flex flex-col overflow-hidden rounded-2xl border transition hover:border-[#00FF99]/40" style={{ borderColor: "var(--border)", background: "var(--bg-elevated)" }}>
         <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "var(--bg-deeper)" }}>
-          <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          <Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
           <div className="absolute left-3 top-3 flex flex-col gap-1.5">
             {product.oldPrice && <span className="rounded-full bg-[#00FF99] px-2.5 py-0.5 text-[11px] font-bold text-black">Скидка</span>}
             {product.isNew && <span className="rounded-full bg-white px-2.5 py-0.5 text-[11px] font-bold text-black">New</span>}
@@ -303,10 +305,10 @@ function CatalogContent() {
     <div className="min-h-screen" style={{ background: "var(--bg)", color: "var(--text)" }}>
       <CartDrawer />
 
-      <header className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)" }}>
+      <header className="fixed left-0 top-0 z-50 w-full border-b md:backdrop-blur-xl" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--bg-deeper) 75%, transparent)", paddingTop: "env(safe-area-inset-top)" }}>
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Aimiko" className="h-9 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+            <Image src="/logo.png" alt="Aimiko" width={120} height={36} className="h-9 w-auto object-contain" priority />
           </Link>
           <div className="relative flex max-w-lg flex-1">
             <div className="flex h-10 w-full items-center rounded-xl border px-4 transition focus-within:border-[#00FF99]/50" style={{ borderColor: "var(--border)", background: "var(--bg-soft)" }}>

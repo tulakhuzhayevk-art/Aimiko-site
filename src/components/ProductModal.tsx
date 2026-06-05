@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -96,19 +97,16 @@ export function ProductModal({
               style={{ background: "var(--bg-deeper)" }}
             >
               <AnimatePresence mode="wait">
-                <motion.img
+                <motion.div
                   key={product.images[imageIndex]}
-                  src={product.images[imageIndex]}
-                  alt={product.name}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="h-full w-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
+                  className="absolute inset-0"
+                >
+                  <Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 768px) 100vw, 600px" className="object-cover" />
+                </motion.div>
               </AnimatePresence>
 
               {/* Badges */}
@@ -156,13 +154,12 @@ export function ProductModal({
                           : "border-white/20 opacity-60 hover:opacity-100"
                       }`}
                     >
-                      <img
+                      <Image
                         src={img}
                         alt=""
+                        width={80}
+                        height={80}
                         className="h-full w-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                        }}
                       />
                     </button>
                   ))}

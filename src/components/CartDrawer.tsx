@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -335,13 +336,12 @@ ${orderMessage}`,
                           className="h-24 w-24 shrink-0 overflow-hidden rounded-xl"
                           style={{ background: "var(--bg-deeper)" }}
                         >
-                          <img
+                          <Image
                             src={item.product.images[0]}
                             alt={item.product.name}
+                            width={96}
+                            height={96}
                             className="h-full w-full object-cover"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
                           />
                         </div>
 
