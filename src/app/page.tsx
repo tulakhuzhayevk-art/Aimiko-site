@@ -417,7 +417,7 @@ function ProductCard({ product }: { product: Product }) {
     if (activeCategoryId) {
       return products.filter((p) => p.categoryId === activeCategoryId);
     }
-    return products.filter((p) => p.isPopular === true).slice(0, 3);
+    return products.filter((p) => p.isPopular === true).slice(0, 4);
   }, [searchQuery, activeCategoryId, products]);
 
   const handleSelectCategory = (id: string) => {
@@ -1002,7 +1002,7 @@ function ProductCard({ product }: { product: Product }) {
               initial="hidden"
               animate="visible"
               variants={stagger}
-              className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+              className="grid grid-cols-2 gap-3 md:gap-6 xl:grid-cols-3"
             >
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
