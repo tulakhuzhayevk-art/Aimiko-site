@@ -158,7 +158,7 @@ ${orderMessage}`,
 
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="https://wa.me/79895772177"
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-12 items-center justify-center rounded-xl bg-[#00FF99] font-semibold text-black"
@@ -485,7 +485,7 @@ ${orderMessage}`,
 
                       <div className="grid grid-cols-2 gap-3">
                         <a
-                          href="https://wa.me/79895772177"
+                          href={whatsappLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex h-11 items-center justify-center rounded-xl bg-[#00FF99] font-semibold text-black"
