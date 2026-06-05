@@ -28,6 +28,8 @@ import {
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
+import { addToSearchHistory, clearSearchHistory, getSearchHistory, removeFromSearchHistory } from "@/lib/search-history";
+import { SearchHistoryPanel } from "@/components/SearchHistoryPanel";
 const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { MobileHeroCard } from "@/components/MobileHeroCard";
 import Image from "next/image";
@@ -355,6 +357,9 @@ function ProductCard({ product }: { product: Product }) {
    export default function HomePage() {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
+    const [searchFocused, setSearchFocused] = useState(false);
+    const [searchHistory, setSearchHistory] = useState<string[]>([]);
+    useEffect(() => { setSearchHistory(getSearchHistory()); }, []);
     const [activeSlide, setActiveSlide] = useState(0);
     const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -504,6 +509,8 @@ function ProductCard({ product }: { product: Product }) {
                     setActiveCategoryId(null);
                   }
                 }}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder="Поиск товаров, моделей, запчастей..."
                 className="w-full bg-transparent px-4 text-sm outline-none"
                 style={{ color: "var(--text)" }}
@@ -518,6 +525,13 @@ function ProductCard({ product }: { product: Product }) {
               )}
             </div>
 
+            <SearchHistoryPanel
+              visible={searchFocused && !searchQuery && searchHistory.length > 0}
+              items={searchHistory}
+              onPick={(q) => setSearchQuery(q)}
+              onRemove={(q) => setSearchHistory(removeFromSearchHistory(q))}
+              onClear={() => { clearSearchHistory(); setSearchHistory([]); }}
+            />
             {/* Search dropdown */}
             {searchQuery && (
               <div
@@ -533,6 +547,7 @@ function ProductCard({ product }: { product: Product }) {
                       <button
                         key={product.id}
                         onClick={() => {
+                          setSearchHistory(addToSearchHistory(searchQuery));
                           setSearchQuery("");
                           setActiveCategoryId(product.categoryId);
                           requestAnimationFrame(() =>
