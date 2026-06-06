@@ -30,6 +30,7 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { addToSearchHistory, clearSearchHistory, getSearchHistory, removeFromSearchHistory } from "@/lib/search-history";
 import { SearchHistoryPanel } from "@/components/SearchHistoryPanel";
+import { MobileSearchBar } from "@/components/MobileSearchBar";
 const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { MobileHeroCard } from "@/components/MobileHeroCard";
 import Image from "next/image";
@@ -269,16 +270,16 @@ function ProductCard({ product }: { product: Product }) {
         <p className="text-sm" style={{ color: "var(--text-faint)" }}>
           {product.category}
         </p>
-        <h4 className="mt-1 text-xl font-semibold">{product.name}</h4>
+        <h4 className="mt-1 line-clamp-2 min-h-[3.5rem] text-xl font-semibold">{product.name}</h4>
         <p
-                    className="mt-3 line-clamp-2 text-sm leading-relaxed"
+                    className="mt-3 line-clamp-2 min-h-[2.5rem] text-sm leading-relaxed"
           style={{ color: "var(--text-muted)" }}
         >
           {product.description}
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-2">
-          {product.shortSpecs.map((spec) => (
+        <div className="mt-5 grid grid-cols-2 gap-2 min-h-[6rem]">
+          {product.shortSpecs.slice(0, 4).map((spec) => (
             <div
               key={spec}
               className="rounded-xl border px-3 py-2 text-sm"
@@ -289,7 +290,7 @@ function ProductCard({ product }: { product: Product }) {
           ))}
         </div>
 
-        <div className="mt-7">
+        <div className="mt-auto pt-7">
           <p className="text-sm" style={{ color: "var(--text-faint)" }}>
             Розничная цена
           </p>
@@ -494,7 +495,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Search */}
-          <div className="relative flex max-w-xl flex-1">
+          <div className="relative hidden flex-1 max-w-xl md:flex">
             <div
               className="flex h-12 w-full items-center rounded-2xl border px-5 transition focus-within:border-[#00FF99]/50"
               style={{ borderColor: "var(--border)", background: "var(--bg-soft)" }}
@@ -639,6 +640,13 @@ function ProductCard({ product }: { product: Product }) {
             </button>
           </div>
         </div>
+        <MobileSearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          setSearchFocused={setSearchFocused}
+          activeCategoryId={activeCategoryId}
+          setActiveCategoryId={setActiveCategoryId}
+        />
       </header>
 
       {/* ════════════ MOBILE MENU ════════════ */}
