@@ -82,6 +82,7 @@ const reviews = [
   { name: "Алексей М.", role: "Курьер", text: "Заказал M1 Pro для работы. Откатал уже 3000 км — батарея держит как в день покупки.", rating: 5 },
   { name: "Дмитрий К.", role: "Владелец сервиса", text: "Беру у Aimiko опт уже год. Аккумуляторы EVE приходят с честным знаком, всё чётко.", rating: 5 },
   { name: "Игорь С.", role: "Магазин электротранспорта", text: "У Aimiko и цены лучше, и общение нормальное. Поставки в срок.", rating: 5 },
+  { name: "Артём Ш.", role: "Прокат электротранспорта", text: "Закупили партию для проката. Помогли выбрать модель под нагрузку, документы оформили быстро.", rating: 5 },
 ];
 
 const deliveryItems = [
@@ -266,19 +267,19 @@ function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Card body */}
-      <div className="flex flex-1 flex-col p-6">
-        <p className="text-sm" style={{ color: "var(--text-faint)" }}>
+      <div className="flex flex-1 flex-col p-3 md:p-6">
+        <p className="hidden text-sm md:block" style={{ color: "var(--text-faint)" }}>
           {product.category}
         </p>
-        <h4 className="mt-1 line-clamp-2 min-h-[3.5rem] text-xl font-semibold">{product.name}</h4>
+        <h4 className="mt-1 line-clamp-2 min-h-[2.5rem] text-sm font-semibold md:min-h-[3.5rem] md:text-xl">{product.name}</h4>
         <p
-                    className="mt-3 line-clamp-2 min-h-[2.5rem] text-sm leading-relaxed"
+                    className="mt-3 hidden line-clamp-2 min-h-[2.5rem] text-sm leading-relaxed md:block"
           style={{ color: "var(--text-muted)" }}
         >
           {product.description}
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-2 min-h-[6rem]">
+        <div className="mt-5 hidden grid-cols-2 gap-2 min-h-[6rem] md:grid">
           {product.shortSpecs.slice(0, 4).map((spec) => (
             <div
               key={spec}
@@ -295,7 +296,7 @@ function ProductCard({ product }: { product: Product }) {
             Розничная цена
           </p>
           <div className="mt-1 flex items-end gap-3">
-            <p className="text-3xl font-black text-[#00FF99]">
+            <p className="text-2xl font-black text-[#00FF99] md:text-3xl">
               {product.price}
             </p>
             {product.oldPrice && (
@@ -307,7 +308,7 @@ function ProductCard({ product }: { product: Product }) {
               </p>
             )}
           </div>
-          <div className="mt-3 rounded-2xl border border-[#00FF99]/20 bg-[#00FF99]/5 px-4 py-3">
+          <div className="mt-3 rounded-2xl border border-[#00FF99]/20 bg-[#00FF99]/5 px-3 py-2 md:px-4 md:py-3">
             <p className="text-xs" style={{ color: "var(--text-faint)" }}>
               Оптовая цена
             </p>
@@ -317,7 +318,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-4 grid grid-cols-1 gap-2 md:mt-6 md:grid-cols-2 md:gap-3">
         <button
             onClick={(e) => { e.stopPropagation(); e.preventDefault(); addItem(product); }}
             className="h-12 rounded-xl bg-[#00FF99] font-semibold text-black transition hover:shadow-[0_0_35px_rgba(0,255,153,0.25)]"
@@ -337,7 +338,7 @@ function ProductCard({ product }: { product: Product }) {
                 "noopener,noreferrer"
               );
             }}
-            className="flex h-12 items-center justify-center rounded-xl border transition hover:border-[#00FF99]/30"
+            className="hidden h-12 items-center justify-center rounded-xl border transition hover:border-[#00FF99]/30 md:flex"
             style={{
               borderColor: "var(--border)",
               background: "var(--surface)",
@@ -727,7 +728,7 @@ function ProductCard({ product }: { product: Product }) {
       </AnimatePresence>
 
       {/* ════════════ HERO ════════════ */}
-      <section id="top" className="relative px-5 pb-24 pt-32 lg:pt-40">
+      <section id="top" className="relative px-5 pb-24 pt-[calc(env(safe-area-inset-top)+9.5rem)] lg:pt-40">
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
           <motion.div initial="hidden" animate="visible" variants={stagger}>
             <motion.div
@@ -1048,12 +1049,12 @@ function ProductCard({ product }: { product: Product }) {
               Рейтинг 4.9 на Яндекс.Картах.
             </p>
           </motion.div>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4">
             {reviews.map((review) => (
               <motion.div
                 key={review.name}
                 variants={fadeUp}
-                className="rounded-3xl border p-7"
+                className="rounded-3xl border p-4 md:p-7"
                 style={{
                   borderColor: "var(--border)",
                   background: "var(--bg-elevated)",
@@ -1108,21 +1109,21 @@ function ProductCard({ product }: { product: Product }) {
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#00FF99]/30 bg-[#00FF99]/10 px-4 py-2 text-sm text-[#00FF99]">
               <Award size={16} />О компании
             </div>
-            <h2 className="text-3xl font-bold lg:text-5xl">
+            <h2 className="text-2xl font-bold md:text-3xl lg:text-5xl">
               Мы не просто продаём —{" "}
               <span className="block text-[#00FF99]">
                 мы даём свободу передвижения
               </span>
             </h2>
             <p
-              className="mt-6 max-w-3xl text-lg leading-relaxed"
+              className="mt-4 max-w-3xl text-base leading-relaxed md:mt-6 md:text-lg"
               style={{ color: "var(--text-muted)" }}
             >
               Aimiko — собственный бренд электротранспорта. Прямые поставки,
               контроль качества на каждом этапе, честные цены и сервис, которому
               доверяют курьеры, мастерские и магазины по всей России.
             </p>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mt-6 grid grid-cols-3 gap-2 md:mt-10 md:gap-5">
               {[
                 { num: "1000+", label: "довольных клиентов" },
                 { num: "4.9", label: "рейтинг на картах" },
@@ -1130,14 +1131,14 @@ function ProductCard({ product }: { product: Product }) {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-2xl border p-5"
+                  className="rounded-2xl border p-3 md:p-5"
                   style={{
                     borderColor: "var(--border)",
                     background: "var(--surface)",
                   }}
                 >
-                  <p className="text-3xl font-black text-[#00FF99]">{s.num}</p>
-                  <p className="mt-1" style={{ color: "var(--text-muted)" }}>
+                  <p className="text-xl font-black text-[#00FF99] md:text-3xl">{s.num}</p>
+                  <p className="mt-1 text-xs md:text-base" style={{ color: "var(--text-muted)" }}>
                     {s.label}
                   </p>
                 </div>
