@@ -1,4 +1,5 @@
 "use client";
+import { ImageLightbox } from "@/components/ImageLightbox";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -43,6 +44,7 @@ export default function ProductPage() {
   const { addItem, isInCart, totalItems, openCart } = useCart();
   const [imageIndex, setImageIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<"description" | "specs">("specs");
 
@@ -139,7 +141,17 @@ export default function ProductPage() {
         <motion.div initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }} className="grid gap-8 lg:grid-cols-2">
           {/* Gallery */}
           <motion.div variants={fadeUp}>
-            <div className="relative aspect-square overflow-hidden rounded-3xl" style={{ background: "var(--bg-deeper)" }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+            <div className="relative aspect-square overflow-hidden rounded-3xl cursor-pointer" style={{ background: "var(--bg-deeper)" }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onClick={() => setLightboxOpen(true)}>
+              {lightboxOpen && (
+                <ImageLightbox
+                  images={product.images}
+                  index={imageIndex}
+                  alt={product.name}
+                  onClose={() => setLightboxOpen(false)}
+                  onNext={nextImage}
+                  onPrev={prevImage}
+                />
+              )}
               <AnimatePresence mode="wait">
                 <motion.div key={product.images[imageIndex]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="absolute inset-0"><Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover" priority /></motion.div>
               </AnimatePresence>
