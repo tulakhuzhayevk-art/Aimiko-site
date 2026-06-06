@@ -62,7 +62,7 @@ export default function ServicesPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1400px] px-5 pt-24 pb-16">
+      <div className="mx-auto max-w-[1400px] px-5 pt-24 pb-16" style={{ paddingTop: "calc(env(safe-area-inset-top) + 6rem)" }}>
         <BackButton />
         <div className="mb-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
           <Link href="/" className="transition hover:text-[#00FF99]">Главная</Link>

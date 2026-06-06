@@ -127,7 +127,7 @@ export default function ProductPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1200px] px-5 pb-16 pt-24">
+      <div className="mx-auto max-w-[1200px] px-5 pb-16 pt-24" style={{ paddingTop: "calc(env(safe-area-inset-top) + 6rem)" }}>
         <BackButton />
         <div className="mb-6 flex items-center gap-1.5 text-sm" style={{ color: "var(--text-faint)" }}>
           <Link href="/" className="transition hover:text-[#00FF99]">Главная</Link>
@@ -153,7 +153,7 @@ export default function ProductPage() {
                 />
               )}
               <AnimatePresence mode="wait">
-                <motion.div key={product.images[imageIndex]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="absolute inset-0"><Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 1024px) 100vw, 600px" className="object-cover" priority /></motion.div>
+                <motion.div key={product.images[imageIndex]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="absolute inset-0"><Image src={product.images[imageIndex]} alt={product.name} fill sizes="(max-width: 1024px) 100vw, 600px" className="object-contain" priority /></motion.div>
               </AnimatePresence>
               <div className="absolute left-4 top-4 flex flex-col gap-1.5">
                 {product.oldPrice && <span className="rounded-full bg-[#00FF99] px-3 py-1 text-xs font-bold text-black">Скидка</span>}
