@@ -31,6 +31,7 @@ import dynamic from "next/dynamic";
 import { addToSearchHistory, clearSearchHistory, getSearchHistory, removeFromSearchHistory } from "@/lib/search-history";
 import { SearchHistoryPanel } from "@/components/SearchHistoryPanel";
 import { MobileSearchBar } from "@/components/MobileSearchBar";
+import { SearchResultsDropdown } from "@/components/SearchResultsDropdown";
 const CartDrawer = dynamic(() => import("@/components/CartDrawer").then((m) => m.CartDrawer), { ssr: false });
 import { MobileHeroCard } from "@/components/MobileHeroCard";
 import Image from "next/image";
@@ -534,73 +535,8 @@ function ProductCard({ product }: { product: Product }) {
               onRemove={(q) => setSearchHistory(removeFromSearchHistory(q))}
               onClear={() => { clearSearchHistory(); setSearchHistory([]); }}
             />
-            {/* Search dropdown */}
-            {searchQuery && (
-              <div
-                className="fixed left-4 right-4 top-24 max-h-[60vh] md:absolute md:left-0 md:right-auto md:top-14 md:max-h-[70vh] md:w-full md:max-w-[calc(100vw-2rem)] overflow-y-auto rounded-2xl border p-4 shadow-2xl shadow-[#00FF99]/10"
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--bg-elevated)",
-                }}
-              >
-                {filteredProducts.length > 0 ? (
-                  <div className="space-y-2">
-                    {filteredProducts.slice(0, 6).map((product) => (
-                      <button
-                        key={product.id}
-                        onClick={() => {
-                          setSearchHistory(addToSearchHistory(searchQuery));
-                          setSearchQuery("");
-                          setActiveCategoryId(product.categoryId);
-                          requestAnimationFrame(() =>
-                            document
-                              .getElementById("catalog")
-                              ?.scrollIntoView({ behavior: "smooth" })
-                          );
-                        }}
-                        className="flex w-full items-center gap-3 rounded-xl border p-3 text-left transition hover:border-[#00FF99]/30"
-                        style={{
-                          borderColor: "var(--border-soft)",
-                          background: "var(--surface)",
-                        }}
-                      >
-                        <div
-                          className="h-12 w-12 shrink-0 overflow-hidden rounded-lg"
-                          style={{ background: "var(--bg-deeper)" }}
-                        >
-                          <Image
-                            src={product.images[0]}
-                            alt=""
-                            width={48}
-                            height={48}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="line-clamp-2 text-sm font-medium">{product.name}</p>
-                          <p
-                            className="text-sm"
-                            style={{ color: "var(--text-faint)" }}
-                          >
-                            {product.category} • {product.price}
-                          </p>
-                        </div>
-                        <ChevronRight className="text-[#00FF99]" size={18} />
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div
-                    className="py-8 text-center text-sm"
-                    style={{ color: "var(--text-faint)" }}
-                  >
-                    Ничего не найдено
-                  </div>
-                )}
-              </div>
-            )}
+            <SearchResultsDropdown visible={!!searchQuery} products={filteredProducts.slice(0, 6)} onSelect={(product) => { setSearchHistory(addToSearchHistory(searchQuery)); setSearchQuery(""); setActiveCategoryId(product.categoryId); requestAnimationFrame(() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })); }} />
           </div>
-
           {/* Header actions */}
           <div className="flex items-center gap-2">
             <ThemeToggle className="hidden md:flex" />
