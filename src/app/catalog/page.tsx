@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
@@ -131,6 +131,8 @@ function CatalogProductCard({ product, view }: { product: Product; view: "grid" 
 
 function CatalogContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
@@ -185,6 +187,17 @@ function CatalogContent() {
       setActiveCategoryId(cat);
     }
   }, [searchParams]);
+  useEffect(() => {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (activeCategoryId) {
+      params.set("category", activeCategoryId);
+    } else {
+      params.delete("category");
+    }
+    const qs = params.toString();
+    router.replace(qs ? pathname + "?" + qs : pathname, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCategoryId]);
 
   const filteredProducts = useMemo<Product[]>(() => {
     let result = [...allProducts];
