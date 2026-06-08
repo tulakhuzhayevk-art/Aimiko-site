@@ -1,19 +1,23 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 
 export function BackButton() {
   const router = useRouter();
-
   const handleBack = () => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const backCategory = params.get("backCategory");
+    if (backCategory) {
+      router.push("/catalog?category=" + backCategory);
+      return;
+    }
     if (window.history.length > 1) {
       router.back();
     } else {
       router.push("/");
     }
   };
-
   return (
     <button
       onClick={handleBack}
