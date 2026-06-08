@@ -535,7 +535,7 @@ function ProductCard({ product }: { product: Product }) {
               onRemove={(q) => setSearchHistory(removeFromSearchHistory(q))}
               onClear={() => { clearSearchHistory(); setSearchHistory([]); }}
             />
-            <SearchResultsDropdown visible={!!searchQuery} products={filteredProducts.slice(0, 6)} onSelect={(product) => { setSearchHistory(addToSearchHistory(searchQuery)); setSearchQuery(""); setActiveCategoryId(product.categoryId); requestAnimationFrame(() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })); }} />
+            <SearchResultsDropdown visible={!!searchQuery} products={filteredProducts.slice(0, 6)} onSelect={(product) => { setSearchHistory(addToSearchHistory(searchQuery)); setSearchQuery(""); window.history.pushState(null, "", "/catalog?category=" + product.categoryId); router.push("/catalog/" + product.id); }} />
           </div>
           {/* Header actions */}
           <div className="flex items-center gap-2">
