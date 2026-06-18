@@ -429,10 +429,9 @@ ${orderMessage}`,
                 </div>
 
                 <footer
-                  className="overflow-y-auto p-5"
+                  className="p-5"
                   style={{
                     borderTop: "1px solid var(--border)",
-                    maxHeight: "75vh",
                     paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))",
                   }}
                 >
@@ -523,39 +522,39 @@ ${orderMessage}`,
 
                   {!orderSuccess && showCheckoutOptions && (
                     <div className="mt-3 rounded-2xl border p-3" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
-                      <div className="mb-4 grid gap-3">
+                      <div className="mb-3 grid gap-2">
                         <input
                           value={customerName}
                           onChange={(e) => setCustomerName(e.target.value)}
                           placeholder="Ваше имя"
-                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          className="h-10 rounded-xl border px-3 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         />
                         <input
                           value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
                           placeholder="Телефон для связи"
-                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          className="h-10 rounded-xl border px-3 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         />
                         <input
                           value={customerCity}
                           onChange={(e) => setCustomerCity(e.target.value)}
                           placeholder="Город"
-                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          className="h-10 rounded-xl border px-3 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         />
                         <input
                           value={customerAddress}
                           onChange={(e) => setCustomerAddress(e.target.value)}
                           placeholder="Адрес доставки"
-                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          className="h-10 rounded-xl border px-3 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         />
                         <select
                           value={paymentMethod}
                           onChange={(e) => setPaymentMethod(e.target.value)}
-                          className="h-11 rounded-xl border px-3 text-sm outline-none"
+                          className="h-10 rounded-xl border px-3 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         >
                           <option>Наличные</option>
@@ -565,7 +564,7 @@ ${orderMessage}`,
                           value={customerComment}
                           onChange={(e) => setCustomerComment(e.target.value)}
                           placeholder="Комментарий к заказу"
-                          className="min-h-20 rounded-xl border px-3 py-2 text-sm outline-none"
+                          className="min-h-16 rounded-xl border px-3 py-2 text-sm outline-none"
                           style={{ borderColor: "var(--border)", background: "var(--bg)", color: "var(--text)" }}
                         />
                       </div>
