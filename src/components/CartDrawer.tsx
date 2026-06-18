@@ -429,7 +429,7 @@ ${orderMessage}`,
                 </div>
 
                 <footer
-                  className="p-5"
+                  className="mt-auto shrink-0 p-5"
                   style={{
                     borderTop: "1px solid var(--border)",
                     paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))",
@@ -521,8 +521,8 @@ ${orderMessage}`,
                   )}
 
                   {!orderSuccess && showCheckoutOptions && (
-                    <div className="mt-3 rounded-2xl border p-3" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
-                      <div className="mb-3 grid gap-2">
+                    <div className="mt-3 flex max-h-[42vh] flex-col overflow-hidden rounded-2xl border" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+                      <div className="grid gap-2 overflow-y-auto p-3">
                         <input
                           value={customerName}
                           onChange={(e) => setCustomerName(e.target.value)}
@@ -569,6 +569,7 @@ ${orderMessage}`,
                         />
                       </div>
 
+                      <div className="shrink-0 p-3" style={{ borderTop: "1px solid var(--border)" }}>
                       <button
                         type="button"
                         onClick={sendOrderToTelegram}
@@ -577,6 +578,7 @@ ${orderMessage}`,
                         <Send size={16} />
                         Отправить заявку
                       </button>
+                      </div>
                     </div>
                   )}
 
