@@ -429,8 +429,12 @@ ${orderMessage}`,
                 </div>
 
                 <footer
-                  className="p-5"
-                  style={{ borderTop: "1px solid var(--border)" }}
+                  className="overflow-y-auto p-5"
+                  style={{
+                    borderTop: "1px solid var(--border)",
+                    maxHeight: "75vh",
+                    paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))",
+                  }}
                 >
                   {totalSavings > 0 && (
                     <div
