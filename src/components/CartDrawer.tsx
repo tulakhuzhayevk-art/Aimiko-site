@@ -509,7 +509,7 @@ ${orderMessage}`,
                     </div>
                   )}
 
-                  {!orderSuccess && (
+                  {!orderSuccess && !showCheckoutOptions && (
                     <button
                       type="button"
                       onClick={() => setShowCheckoutOptions((value) => !value)}
