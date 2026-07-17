@@ -1279,7 +1279,7 @@ function ProductCard({ product }: { product: Product }) {
                   href="https://wa.me/79882564919"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border transition hover:text-[#00FF99]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border text-[#25D366] transition hover:scale-110"
                   style={{
                     borderColor: "var(--border)",
                     background: "var(--surface)",
@@ -1292,7 +1292,7 @@ function ProductCard({ product }: { product: Product }) {
                   href="https://t.me/Aimiko_Admin"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border transition hover:text-[#00FF99]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border text-[#229ED9] transition hover:scale-110"
                   style={{
                     borderColor: "var(--border)",
                     background: "var(--surface)",
@@ -1305,7 +1305,7 @@ function ProductCard({ product }: { product: Product }) {
                   href="https://youtube.com/@aimiko_ru"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border transition hover:text-[#00FF99]"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border text-[#FF0000] transition hover:scale-110"
                   style={{
                     borderColor: "var(--border)",
                     background: "var(--surface)",
@@ -1313,6 +1313,31 @@ function ProductCard({ product }: { product: Product }) {
                   aria-label="YouTube"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+                </a>
+                <a
+                  href="https://www.instagram.com/aimiko.official"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border transition hover:scale-110"
+                  style={{
+                    borderColor: "var(--border)",
+                    background: "var(--surface)",
+                  }}
+                  aria-label="Instagram"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <defs>
+                      <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#FDB750" />
+                        <stop offset="30%" stopColor="#F58529" />
+                        <stop offset="60%" stopColor="#DD2A7B" />
+                        <stop offset="100%" stopColor="#8134AF" />
+                      </linearGradient>
+                    </defs>
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" stroke="url(#igGrad)" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="url(#igGrad)" />
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" stroke="url(#igGrad)" />
+                  </svg>
                 </a>
                  </div>
             </div>
